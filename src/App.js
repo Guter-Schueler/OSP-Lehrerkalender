@@ -1,11 +1,18 @@
-import React from "react";
-import "./style.css";
+import './App.css';
 
-export default function App() {
+function App() {
   return (
-    <div>
-      <h1>Hello StackBlitz!</h1>
-      <p>Start editing to see some magic happen :)</p>
+    <div className="App">
+      <header className="App-header">
+        <img src="https://www.svgrepo.com/show/7076/monthly-calendar.svg" className="App-logo" alt="logo" />
+        <span
+          className="App-link"
+        >
+          OSP Lehrerkalender
+        </span>
+      </header>
     </div>
   );
 }
+
+export default App;
