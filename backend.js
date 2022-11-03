@@ -3,12 +3,11 @@ import sqlite3 from 'sqlite3';
 import cors from 'cors';
 import cookies from 'cookie-parser';
 import bodyParser from 'body-parser';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const app = express();
 const port = 3000;
-let db = new sqlite3.Database('test.sqlite');
+let db = new sqlite3.Database('lehrerkalender.db');
 
 app.use(cors());
 app.use(cookies());
@@ -25,16 +24,10 @@ function checkToken(req, res, next) {
     next();
   });
 }
-// Falls an DB was geändert werden soll - wenn Projekt fertig raus.
-// db.run('CREATE TABLE IF NOT EXISTS login (username TEXT, password TEXT)');
-// db.run('DROP TABLE article');
-db.run(
-  'CREATE TABLE IF NOT EXISTS article (articleId INTEGER, description TEXT UNIQUE,category INTEGER, unit INTEGER, price	REAL, PRIMARY KEY(articleId AUTOINCREMENT), FOREIGN KEY(category) REFERENCES category(categoryId), FOREIGN KEY(unit) REFERENCES units(unitId))'
-);
 
-app.get('/login', (req, res) => {
+app.get('/lehrer', (req, res) => {
   const response = db.all(
-    'SELECT rowid AS id, username, password FROM login',
+    'SELECT id, kuerzel, vorname, nachname, passwort FROM lehrer',
     function (err, rows) {
       res.send(rows);
     }
@@ -42,55 +35,16 @@ app.get('/login', (req, res) => {
   return response;
 });
 
-app.post('/login', (req, res) => {
+// Wann wird in lehrer was geposted und wer darf das ? dementsprechend muss hier angepasst werden
+app.post('/lehrer', checkToken, (req, res) => {
   db.get(
-    'SELECT * FROM login WHERE username = $username',
-    { $username: req.body.userName },
-    (err, user) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        if (!user) {
-          return res.sendStatus(400);
-        }
-        bcrypt.compare(
-          req.body.password,
-          user.password,
-          function (err, isCorrect) {
-            if (isCorrect) {
-              const jwtValue = jwt.sign(
-                {
-                  data: 'foobar',
-                },
-                'secret',
-                { expiresIn: '1h' }
-              );
-              res.send({
-                userName: user.username,
-                token: jwtValue,
-              });
-            } else {
-              res.sendStatus(401);
-            }
-          }
-        );
-      }
-    }
-  );
-});
-
-app.get('/category', checkToken, (req, res) => {
-  const response = db.all('SELECT * FROM category', function (err, rows) {
-    res.send(rows);
-  });
-
-  return response;
-});
-
-app.post('/category', checkToken, (req, res) => {
-  db.run(
-    'INSERT INTO category (description) VALUES ($category)',
-    { $category: req.body.category },
+    'INSER INTO lehrer (kuerzel, vorname, nachname, passwort) VALUES ( $kuerzel, $vorname, $nachname, $passwort)',
+    {
+      $klassenlehrerId: req.body.kuerzel,
+      $klassenlehrerId: req.body.vorname,
+      $klassenlehrerId: req.body.nachname,
+      $klassenlehrerId: req.body.passwort,
+    },
     (err) => {
       if (err) {
         if (err.message.includes('UNIQUE constraint failed')) {
@@ -105,51 +59,202 @@ app.post('/category', checkToken, (req, res) => {
   );
 });
 
-app.get('/units', checkToken, (req, res) => {
-  const response = db.all('SELECT * FROM units', function (err, rows) {
-    res.send(rows);
-  });
-
-  return response;
-});
-
-app.post('/units', checkToken, (req, res) => {
-  db.run(
-    'INSERT INTO units (description) VALUES ($unit)',
-    { $unit: req.body.unit },
-    (err) => {
-      if (err) {
-        if (err.message.includes('UNIQUE constraint failed')) {
-          res.status(400).json({ message: 'An Item cant be added twice' });
-        } else {
-          res.status(500).json({ message: err.message });
-        }
-      } else {
-        res.status(200).json({ message: 'inserted' });
-      }
-    }
-  );
-});
-
-app.get('/article', checkToken, (req, res) => {
+app.get('/faecher', checkToken, (req, res) => {
   const response = db.all(
-    'SELECT a.articleId, a.description, a.price, c.description AS "category", u.description AS "unit" FROM article a INNER JOIN units u ON u.unitId = a.unit INNER JOIN category c ON c.categoryId = a.category',
+    'SELECT id, bezeichnung, kuerzel FROM faecher',
     function (err, rows) {
       res.send(rows);
     }
   );
-
   return response;
 });
 
-app.post('/article', checkToken, (req, res) => {
-  db.run(
-    'INSERT INTO article ( description, category, price, unit) VALUES ($description,$category, $price, $unit )',
+// Wann wird in faecher was geposted und wer darf das ? dementsprechend muss hier angepasst werden
+app.post('/faecher', checkToken, (req, res) => {
+  db.get(
+    'INSER INTO faecher (bezeichnung, kuerzel) VALUES ($bezeichnung, §kuerzel)',
     {
-      $description: req.body.newItem.description,
-      $category: req.body.newItem.category,
-      $price: req.body.newItem.price,
-      $unit: req.body.newItem.unit,
+      $bezeichnung: req.body.bezeichnung,
+      $kuerzel: req.body.kuerzel,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
+app.get('/klassen', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT id, klassenlehrerId, bezeichnung FROM klassen',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+// Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden
+app.post('/klassen', checkToken, (req, res) => {
+  db.get(
+    'INSERT INTO klassen (klassenlehrerId, bezeichnung) VALUES ($klassenlehrerId, $bezeichnung)',
+    {
+      $bezeichnung: req.body.bezeichnung,
+      $klassenlehrerId: req.body.kuerzel,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
+app.get('/noten', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT schuelerId, unterrichtId, datum, typ, note, bemerkung FROM noten',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+// Wann wird in noten was geposted und wer darf das ? dementsprechend muss hier angepasst werden
+app.post('/noten', checkToken, (req, res) => {
+  db.get(
+    'INSER INTO noten (schuelerId, unterrichtId, datum, typ, note, bemerkung) VALUES ( $schuelerId, $unterrichtId, $datum, $typ, $note, $bemerkung)',
+    {
+      $klassenlehrerId: req.body.schuelerId,
+      $klassenlehrerId: req.body.unterrichtId,
+      $klassenlehrerId: req.body.datum,
+      $klassenlehrerId: req.body.typ,
+      $klassenlehrerId: req.body.note,
+      $klassenlehrerId: req.body.bemerkungen,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
+app.get('/schueler', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT id, kuerzel, vorname, nachname, email FROM schueler',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+// Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden
+app.post('/schueler', checkToken, (req, res) => {
+  db.get(
+    'INSER INTO schueler ( vorname, nachname, email) VALUES (  $vorname, $nachname, $email)',
+    {
+      $klassenlehrerId: req.body.vorname,
+      $klassenlehrerId: req.body.nachname,
+      $klassenlehrerId: req.body.email,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
+app.get('/schuelerKlasseRef', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT id, kuerzel, vorname, nachname, passwort FROM schuelerKlasseref',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+// Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden // kein gültig bis?
+app.post('/schuelerKlasseRef', checkToken, (req, res) => {
+  db.get(
+    'INSER INTO schuelerKlasseref (schuelerId, klassenId, gueltigAb) VALUES ( $schuelerId, $klassenId, $gueltigAb)',
+    {
+      $klassenlehrerId: req.body.schuelerId,
+      $klassenlehrerId: req.body.klassenId,
+      $klassenlehrerId: req.body.gueltigAb,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
+// Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden // kein gültig bis?
+
+app.get('/unterricht', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT id, kuerzel, vorname, nachname, passwort FROM lehrer',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+app.get('/unterricht', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT lehrerId, klassenId, faecherId FROM unterricht',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+// Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden // kein gültig bis?
+app.post('/unterricht', checkToken, (req, res) => {
+  db.get(
+    'INSER INTO lehrer (schuelerId, klassenId, gueltigAb) VALUES ( $schuelerId, $klassenId, $gueltigAb)',
+    {
+      $klassenlehrerId: req.body.schuelerId,
+      $klassenlehrerId: req.body.klassenId,
+      $klassenlehrerId: req.body.gueltigAb,
     },
     (err) => {
       if (err) {
