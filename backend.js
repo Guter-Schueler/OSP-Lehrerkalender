@@ -2,6 +2,7 @@ import express from 'express';
 import sqlite3 from 'sqlite3';
 import cors from 'cors';
 import cookies from 'cookie-parser';
+import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 
@@ -25,6 +26,44 @@ function checkToken(req, res, next) {
   });
 }
 
+app.post('/login', (req, res) => {
+  db.get(
+    'SELECT * FROM lehrer WHERE vorname = $username',
+    { $username: req.body.userName },
+    (err, user) => {
+      if (err) {
+        console.log(2);
+        res.sendStatus(500);
+      } else {
+        if (!user) {
+          return res.sendStatus(400);
+        }
+        bcrypt.compare(
+          req.body.password,
+          user.password,
+          function (err, isCorrect) {
+            if (isCorrect) {
+              const jwtValue = jwt.sign(
+                {
+                  data: 'foobar',
+                },
+                'secret',
+                { expiresIn: '1h' }
+              );
+              res.send({
+                userName: user.username,
+                token: jwtValue,
+              });
+            } else {
+              res.sendStatus(401);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
 app.get('/lehrer', (req, res) => {
   const response = db.all(
     'SELECT id, kuerzel, vorname, nachname, passwort FROM lehrer',
@@ -40,10 +79,10 @@ app.post('/lehrer', checkToken, (req, res) => {
   db.get(
     'INSER INTO lehrer (kuerzel, vorname, nachname, passwort) VALUES ( $kuerzel, $vorname, $nachname, $passwort)',
     {
-      $klassenlehrerId: req.body.kuerzel,
-      $klassenlehrerId: req.body.vorname,
-      $klassenlehrerId: req.body.nachname,
-      $klassenlehrerId: req.body.passwort,
+      $kuerzel: req.body.kuerzel,
+      $voranme: req.body.vorname,
+      $nachname: req.body.nachname,
+      $passwort: req.body.passwort,
     },
     (err) => {
       if (err) {
@@ -107,7 +146,7 @@ app.post('/klassen', checkToken, (req, res) => {
     'INSERT INTO klassen (klassenlehrerId, bezeichnung) VALUES ($klassenlehrerId, $bezeichnung)',
     {
       $bezeichnung: req.body.bezeichnung,
-      $klassenlehrerId: req.body.kuerzel,
+      $kuerzel: req.body.kuerzel,
     },
     (err) => {
       if (err) {
@@ -138,12 +177,12 @@ app.post('/noten', checkToken, (req, res) => {
   db.get(
     'INSER INTO noten (schuelerId, unterrichtId, datum, typ, note, bemerkung) VALUES ( $schuelerId, $unterrichtId, $datum, $typ, $note, $bemerkung)',
     {
-      $klassenlehrerId: req.body.schuelerId,
-      $klassenlehrerId: req.body.unterrichtId,
-      $klassenlehrerId: req.body.datum,
-      $klassenlehrerId: req.body.typ,
-      $klassenlehrerId: req.body.note,
-      $klassenlehrerId: req.body.bemerkungen,
+      $schuelierId: req.body.schuelerId,
+      $unterrichtId: req.body.unterrichtId,
+      $dateum: req.body.datum,
+      $typ: req.body.typ,
+      $note: req.body.note,
+      $bemerkungen: req.body.bemerkungen,
     },
     (err) => {
       if (err) {
@@ -174,9 +213,9 @@ app.post('/schueler', checkToken, (req, res) => {
   db.get(
     'INSER INTO schueler ( vorname, nachname, email) VALUES (  $vorname, $nachname, $email)',
     {
-      $klassenlehrerId: req.body.vorname,
-      $klassenlehrerId: req.body.nachname,
-      $klassenlehrerId: req.body.email,
+      $vorname: req.body.vorname,
+      $nachname: req.body.nachname,
+      $email: req.body.email,
     },
     (err) => {
       if (err) {
@@ -207,9 +246,9 @@ app.post('/schuelerKlasseRef', checkToken, (req, res) => {
   db.get(
     'INSER INTO schuelerKlasseref (schuelerId, klassenId, gueltigAb) VALUES ( $schuelerId, $klassenId, $gueltigAb)',
     {
-      $klassenlehrerId: req.body.schuelerId,
-      $klassenlehrerId: req.body.klassenId,
-      $klassenlehrerId: req.body.gueltigAb,
+      $schuelerId: req.body.schuelerId,
+      $klassenId: req.body.klassenId,
+      $gueltigAb: req.body.gueltigAb,
     },
     (err) => {
       if (err) {
@@ -252,9 +291,9 @@ app.post('/unterricht', checkToken, (req, res) => {
   db.get(
     'INSER INTO lehrer (schuelerId, klassenId, gueltigAb) VALUES ( $schuelerId, $klassenId, $gueltigAb)',
     {
-      $klassenlehrerId: req.body.schuelerId,
-      $klassenlehrerId: req.body.klassenId,
-      $klassenlehrerId: req.body.gueltigAb,
+      $schuelerId: req.body.schuelerId,
+      $klassenId: req.body.klassenId,
+      $gueltigAb: req.body.gueltigAb,
     },
     (err) => {
       if (err) {
