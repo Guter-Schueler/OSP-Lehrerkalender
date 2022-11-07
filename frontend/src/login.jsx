@@ -1,3 +1,4 @@
+import React from 'react';
 import userStore from './store.js';
 import './login.scss';
 
