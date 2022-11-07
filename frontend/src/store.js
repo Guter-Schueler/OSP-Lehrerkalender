@@ -48,7 +48,7 @@ const userStore = create((set, get) => ({
 
   login: async (e) => {
     e.preventDefault();
-    myfetch(backendPath, 'POST', {
+    myfetch(backendPath + '/login', 'POST', {
       userName: document.getElementById('userName').value,
       password: document.getElementById('password').value,
     })
