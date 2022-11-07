@@ -14,11 +14,6 @@ app.use(cors());
 app.use(cookies());
 app.use(bodyParser.json());
 
-// db.run('DELETE FROM lehrer WHERE id >= 0');
-// db.run(
-//   'INSERT INTO lehrer ( kuerzel, vorname, nachname, passwort) Values("XX","Admin","Admin","$2b$10$E6YpeFQP44sVY9tGC0ArQ.kz9ePPsQapALhtP1xcW3tUDBNzBWwQ.")'
-// );
-
 function checkToken(req, res, next) {
   // MUSS GEÄNDERT WERDEN TOKEN NICHT ÜBER HEADER!!!
   const token = req.header('X-TOKEN');
