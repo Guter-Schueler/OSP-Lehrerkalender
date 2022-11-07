@@ -16,14 +16,17 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "sqlite3": "^5.1.1",
-    "web-vitals": "^2.1.4"
+    "vite": "^3.2.3",
+    "vitest": "^0.24.5",
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "vite",
+    "build": "vite build",
+    "test": "vitest",
     "eject": "react-scripts eject",
-    "backend-watchmode": "npx tsx watch backend/backend.js"
+    "backend-watchmode": "npx tsx watch backend.js"
   },
   "eslintConfig": {
     "extends": [
