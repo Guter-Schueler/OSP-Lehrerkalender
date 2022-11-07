@@ -14,6 +14,11 @@ app.use(cors());
 app.use(cookies());
 app.use(bodyParser.json());
 
+// db.run('DELETE FROM lehrer WHERE id >= 0');
+// db.run(
+//   'INSERT INTO lehrer ( kuerzel, vorname, nachname, passwort) Values("XX","Admin","Admin","$2b$10$E6YpeFQP44sVY9tGC0ArQ.kz9ePPsQapALhtP1xcW3tUDBNzBWwQ.")'
+// );
+
 function checkToken(req, res, next) {
   // MUSS GEÄNDERT WERDEN TOKEN NICHT ÜBER HEADER!!!
   const token = req.header('X-TOKEN');
@@ -32,7 +37,6 @@ app.post('/login', (req, res) => {
     { $username: req.body.userName },
     (err, user) => {
       if (err) {
-        console.log(2);
         res.sendStatus(500);
       } else {
         if (!user) {
@@ -40,7 +44,7 @@ app.post('/login', (req, res) => {
         }
         bcrypt.compare(
           req.body.password,
-          user.password,
+          user.passwort,
           function (err, isCorrect) {
             if (isCorrect) {
               const jwtValue = jwt.sign(
@@ -51,7 +55,7 @@ app.post('/login', (req, res) => {
                 { expiresIn: '1h' }
               );
               res.send({
-                userName: user.username,
+                userName: user.vorname,
                 token: jwtValue,
               });
             } else {
