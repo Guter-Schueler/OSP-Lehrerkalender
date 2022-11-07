@@ -4,7 +4,7 @@ import Login from './login';
 
 function App() {
   return (
-    <div id="pageWrapper">
+    <div id="page-wrapper">
       <Login />
     </div>
   );
