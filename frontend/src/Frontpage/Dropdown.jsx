@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './styles.scss';
 
 const Dropdown = ({ data, title, setState, selectedOption }) => {
   const [open, setOpen] = React.useState(false);
