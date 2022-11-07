@@ -1,0 +1,87 @@
+h1,
+p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.header-bar {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 8px 0;
+  border-radius: 2px;
+}
+
+.dropdown {
+  margin: 0 8px;
+}
+
+.datepicker {
+  margin-right: 8px;
+  margin-left: auto;
+}
+
+button {
+  width: 80px;
+  height: 32px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  background-color: rgb(224, 224, 224);
+  border-radius: 2px;
+}
+
+button:hover {
+  cursor: pointer;
+  box-shadow: inset 0 -2px 4px 0 grey;
+}
+
+button:active {
+  box-shadow: inset 0 -2px 4px 0 black;
+}
+
+.list-wrap {
+  list-style-type: none;
+  position: absolute;
+  width: 80px;
+  background-color: white;
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.list-wrap > li {
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 0 4px;
+}
+
+.list-wrap > li:hover {
+  cursor: pointer;
+  box-shadow: inset 0 0 4px grey;
+}
+
+.list-wrap > li:active {
+  cursor: pointer;
+  box-shadow: inset 0 0 4px black;
+}
+
+.content-page {
+  border-radius: 2px;
+  box-sizing: border-box;
+  margin-top: 4px;
+  border: 1px solid black;
+  height: 90vh;
+}
+
+.center-bar {
+  box-sizing: border-box;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  width: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  background-color: lightgrey;
+}
