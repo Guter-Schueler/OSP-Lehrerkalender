@@ -4,11 +4,7 @@ import Login from './login';
 import BasePage from './Frontpage/BasePage';
 
 function App() {
-  return (
-    <div id="page-wrapper">
-      <Login />
-    </div>
-  );
+  return <BasePage />;
 }
 
 export default App;
