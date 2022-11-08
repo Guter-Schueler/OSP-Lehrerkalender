@@ -15,8 +15,6 @@ const StudentTable = ({ klasse, fach }) => {
       klasse && fach && schuelerData[klasse][fach] ? schuelerData[klasse][fach] : null,
       [klasse, fach]);
 
-  console.log(data);
-
   return (
     <div>
       <div className="student-row-wrap-head">
@@ -25,7 +23,12 @@ const StudentTable = ({ klasse, fach }) => {
         ))}
       </div>
       {data && data?.map((student) => (
-        <StudentTableRow key={`${fach}${student.id}`} student={student} />
+        <StudentTableRow
+            key={`${fach}${student.id}`}
+            student={student}
+            klasse={klasse}
+            fach={fach}
+        />
       ))}
     </div>
   );
