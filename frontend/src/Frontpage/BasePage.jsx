@@ -1,8 +1,9 @@
 import React from 'react';
-import './style.css';
-import Dropdown from './Dropdown.js';
+import './styles.scss';
+import Dropdown from './Dropdown.jsx';
+import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
 
-export default BasePage = () => {
+export default function BasePage() {
   // TODO: folgende zwei const mit Daten aus der Datenbank ersetzen:
   const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
   const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
@@ -31,9 +32,9 @@ export default BasePage = () => {
       </div>
 
       <div className="content-page">
-        <div key="left-side-dogus"></div>
+        <Tagesuebersicht />
         <div className="center-bar" />
-        <div key="right-side-oli"></div>
+        <Tagesuebersicht />
       </div>
     </div>
   );
