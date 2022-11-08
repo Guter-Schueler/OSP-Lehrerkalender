@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import Dropdown from './Dropdown.jsx';
 import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
+import StudentTable from "../StudentTable/StudentTable";
 
 export default function BasePage() {
   // TODO: folgende zwei const mit Daten aus der Datenbank ersetzen:
@@ -37,6 +38,7 @@ export default function BasePage() {
         </div>
         <div className="center-bar" />
         <div className="side-content-wrap">
+          <StudentTable klasse={selectedKlasse} fach={selectedFach} />
         </div>
       </div>
     </div>
