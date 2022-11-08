@@ -23,7 +23,12 @@ const StudentTable = ({ klasse, fach }) => {
         ))}
       </div>
       {data && data?.map((student) => (
-        <StudentTableRow key={`${fach}${student.id}`} student={student} />
+        <StudentTableRow
+            key={`${fach}${student.id}`}
+            student={student}
+            klasse={klasse}
+            fach={fach}
+        />
       ))}
     </div>
   );
