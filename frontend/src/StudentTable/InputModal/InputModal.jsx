@@ -3,8 +3,6 @@ import ModalFrame from "./ModalFrame";
 
 const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => {
 
-    const examCount = 3;
-
     return (
         <ModalFrame modalToggle={modalToggle} handleModalToggle={handleModalToggle}>
             <div>
