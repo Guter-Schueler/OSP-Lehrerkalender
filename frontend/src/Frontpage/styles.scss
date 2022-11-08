@@ -68,20 +68,24 @@ button:active {
 }
 
 .content-page {
+  display: flex;
   border-radius: 2px;
   box-sizing: border-box;
   margin-top: 4px;
   border: 1px solid black;
   height: 90vh;
+  width: 100vw;
 }
 
 .center-bar {
+  width: 5%;
+  height: 100%;
   box-sizing: border-box;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  width: 5%;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
   background-color: lightgrey;
+}
+
+.side-content-wrap {
+  width: 47.5%;
 }
