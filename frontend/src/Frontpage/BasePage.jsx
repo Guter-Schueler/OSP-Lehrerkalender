@@ -2,15 +2,18 @@ import React from 'react';
 import './styles.scss';
 import Dropdown from './Dropdown.jsx';
 import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
-import StudentTable from "../StudentTable/StudentTable";
+import StudentTable from '../StudentTable/StudentTable';
+import userStore from '../store';
 
 export default function BasePage() {
   // TODO: folgende zwei const mit Daten aus der Datenbank ersetzen:
   const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
   const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
+  const { faecherArray } = userStore();
 
   const [selectedKlasse, selectKlasse] = React.useState('');
   const [selectedFach, selectFach] = React.useState('');
+  console.log(faecherArray);
 
   return (
     <div>
@@ -23,7 +26,7 @@ export default function BasePage() {
         />
 
         <Dropdown
-          data={faecherDropdown}
+          data={faecherArray !== [] ? faecherArray : faecherDropdown}
           title={selectedFach || 'Fach'}
           setState={selectFach}
           selectedOption={selectedFach}

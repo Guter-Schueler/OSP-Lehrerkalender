@@ -1,8 +1,10 @@
 import React from 'react';
 import './styles.scss';
+import userStore from '../store';
 
 const Dropdown = ({ data, title, setState, selectedOption }) => {
   const [open, setOpen] = React.useState(false);
+  const { addFaecher } = userStore();
 
   const handleOpen = () => {
     setOpen(!open);
@@ -11,6 +13,8 @@ const Dropdown = ({ data, title, setState, selectedOption }) => {
   const onSelect = (value) => {
     setState(value);
     setOpen(!open);
+    localStorage.setItem('Klasse', value);
+    addFaecher();
   };
 
   return (

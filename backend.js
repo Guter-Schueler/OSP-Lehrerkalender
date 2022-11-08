@@ -97,25 +97,30 @@ app.post('/lehrer', checkToken, (req, res) => {
   );
 });
 
-app.get('/faecher', checkToken, (req, res) => {
-  const response = db.all(
-    'SELECT id, bezeichnung, kuerzel FROM faecher',
-    function (err, rows) {
-      res.send(rows);
-    }
-  );
-  return response;
-});
+// app.get('/faecher', checkToken, (req, res) => {
+//   const response = db.get(
+//     'SELECT faecher.bezeichnung FROM unterricht LEFT JOIN faecher ON faecherId = faecher.id LEFT JOIN klassen ON klassenId = klassen.id',
+//     (err) => {
+//       if (err) {
+//         if (err.message.includes('UNIQUE constraint failed')) {
+//           res.status(400).json({ message: 'An Item cant be added twice' });
+//         } else {
+//           res.status(500).json({ message: err.message });
+//         }
+//       } else {
+//         res.status(200).json({ message: 'inserted' });
+//       }
+//     }
+//   );
+//   return response;
+// });
 
 // Wann wird in faecher was geposted und wer darf das ? dementsprechend muss hier angepasst werden
 app.post('/faecher', checkToken, (req, res) => {
-  db.get(
-    'INSERT INTO faecher (bezeichnung, kuerzel) VALUES ($bezeichnung, $kuerzel)',
-    {
-      $bezeichnung: req.body.bezeichnung,
-      $kuerzel: req.body.kuerzel,
-    },
-    (err) => {
+  db.all(
+    'SELECT faecher.bezeichnung FROM unterricht LEFT JOIN faecher ON faecherId = faecher.id LEFT JOIN klassen ON klassenId = klassen.id WHERE klassen.bezeichnung = $klassenBezeichnung',
+    { $klassenBezeichnung: req.body.klassenBezeichnung },
+    (err, rows) => {
       if (err) {
         if (err.message.includes('UNIQUE constraint failed')) {
           res.status(400).json({ message: 'An Item cant be added twice' });
@@ -123,7 +128,7 @@ app.post('/faecher', checkToken, (req, res) => {
           res.status(500).json({ message: err.message });
         }
       } else {
-        res.status(200).json({ message: 'inserted' });
+        res.status(200).json({ message: 'inserted', res: rows });
       }
     }
   );
@@ -141,11 +146,10 @@ app.get('/klassen', checkToken, (req, res) => {
 
 // Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden
 app.post('/klassen', checkToken, (req, res) => {
-  db.get(
-    'INSERT INTO klassen (klassenlehrerId, bezeichnung) VALUES ($klassenlehrerId, $bezeichnung)',
+  db.all(
+    'SELECT klassen.bezeichnung FROM unterricht LEFT JOIN faecher ON faecherId = faecher.id LEFT JOIN klassen ON klassenId = klassen.id WHERE faecher.bezeichnung = $faecherBezeichnung',
     {
-      $bezeichnung: req.body.bezeichnung,
-      $klassenlehrerId: req.body.kuerzel,
+      $faecherBezeichnung: req.body.faecherBezeichnung,
     },
     (err) => {
       if (err) {
@@ -210,7 +214,7 @@ app.get('/schueler', checkToken, (req, res) => {
 // Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden
 app.post('/schueler', checkToken, (req, res) => {
   db.get(
-    'INSERT INTO schueler ( vorname, nachname, email) VALUES (  $vorname, $nachname, $email)',
+    'INSERT INTO schueler ( vorname, nachname, email) VALUES ($vorname, $nachname, $email)',
     {
       $vorname: req.body.vorname,
       $nachname: req.body.nachname,

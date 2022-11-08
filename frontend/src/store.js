@@ -64,7 +64,7 @@ const userStore = create((set, get) => ({
 
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   articleArray: [],
-  categoryArray: [],
+  faecherArray: [],
   unitArray: [],
   addingCategory: false,
   addingUnit: false,
@@ -92,8 +92,8 @@ const userStore = create((set, get) => ({
     set({ articleArray });
   },
 
-  setCategoryArray: (categoryArray) => {
-    set({ categoryArray });
+  setFaecherArray: (faecherArray) => {
+    set({ faecherArray });
   },
 
   setUnitArray: (unitArray) => {
@@ -106,8 +106,10 @@ const userStore = create((set, get) => ({
     return res;
   },
 
-  getFaecher: async () => {
-    const res = myfetch(backendPath + '/faecher');
+  getFaecher: async (value) => {
+    const res = myfetch(backendPath + '/faecher').then((res) =>
+      console.log(res)
+    );
 
     return res;
   },
@@ -118,21 +120,22 @@ const userStore = create((set, get) => ({
   },
 
   addFaecher: async (e) => {
-    const { getCategory, setCategoryArray } = get();
-    e.preventDefault();
+    const { setFaecherArray } = get();
 
     myfetch(backendPath + '/faecher', 'POST', {
-      // muss noch id vergeben werden
-      //   bezeichnung: document.getElementById('userName').value,
-      //   kuerzel: document.getElementById('password').value,
+      klassenBezeichnung: localStorage.getItem('Klasse'),
+      faecherBezeichnung: localStorage.getItem('Fach'),
     })
       .then((res) => {
-        getCategory().then((json) => {
-          setCategoryArray(json);
-        });
+        const result = res.res;
+        let tempArray = [];
+        let i = 0;
+        while (i <= result.length) {
+          tempArray.push(result[i].bezeichnung), console.log(tempArray);
+          i++;
+        }
 
-        // document.getElementById('userName').value = '';
-        // document.getElementById('password').value = '';
+        setFaecherArray(tempArray);
       })
       .catch((err) => {
         // replaceAnimatedElement(err.message, true);
