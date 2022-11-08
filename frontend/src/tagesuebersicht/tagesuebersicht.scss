@@ -1,9 +1,37 @@
-#wochenWrapper {
+#wochen-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  width: 47.5vw;
+  height: 100%;
 }
 
-.dayInput {
+.day-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-bottom: 1px solid black;
+}
+
+.day-wrapper:last-child {
+  border: none;
+}
+
+.day {
+  text-align: center;
+  width: 7rem;
+  margin: 0;
+  font-size: larger;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-right-radius: 5px;
+}
+
+.day-input {
   width: 100%;
-  height: 20%;
+  height: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding: 0;
+  outline: none;
 }
