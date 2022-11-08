@@ -1,7 +1,8 @@
 import React from 'react';
 import StudentTableRow from './StudentTableRow';
+import * as schuelerData from './mockSchueler';
 
-const StudentTable = ({ klasse }) => {
+const StudentTable = ({ klasse, fach }) => {
   const headers = [
     'Vorname',
     'Nachname',
@@ -10,36 +11,7 @@ const StudentTable = ({ klasse }) => {
     'Bemerkung',
   ];
 
-  const data = [
-    {
-      vorname: 'Oli',
-      nachname: 'Wiese',
-      mndNote: '3',
-      schrfNote: '2-',
-      bemerkung: 'helfende elfen',
-    },
-    {
-      vorname: 'Cihan',
-      nachname: 'Kurt',
-      mndNote: '1+',
-      schrfNote: '5',
-      bemerkung: 'helfende elfen',
-    },
-    {
-      vorname: 'Dogus',
-      nachname: 'Özzi',
-      mndNote: '5',
-      schrfNote: '6',
-      bemerkung: 'helfende elfen',
-    },
-    {
-      vorname: 'Igor',
-      nachname: 'Dobric',
-      mndNote: '4',
-      schrfNote: '1-',
-      bemerkung: 'abwesend',
-    },
-  ];
+  const data = React.useMemo(() => klasse && fach ? schuelerData[klasse][fach] : null, [klasse, fach])
 
   return (
     <div>
@@ -48,8 +20,8 @@ const StudentTable = ({ klasse }) => {
           <div className="student-bracket">{el}</div>
         ))}
       </div>
-      {data.map((student) => (
-        <StudentTableRow student={student} />
+      {data && data.map((student) => (
+        <StudentTableRow key={`${fach}${student.id}`} student={student} />
       ))}
     </div>
   );
