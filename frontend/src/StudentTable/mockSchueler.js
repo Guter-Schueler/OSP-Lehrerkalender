@@ -1,3 +1,7 @@
+export const FI005 = {}
+
+export const FI006 = {}
+
 export const FI007 = {
     'DEU': [
         {
@@ -113,3 +117,5 @@ export const FI008 = {
         },
     ],
 }
+
+export const FI009 = {}

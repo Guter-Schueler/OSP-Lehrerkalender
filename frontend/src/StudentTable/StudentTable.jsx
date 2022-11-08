@@ -11,7 +11,11 @@ const StudentTable = ({ klasse, fach }) => {
     'Bemerkung',
   ];
 
-  const data = React.useMemo(() => klasse && fach ? schuelerData[klasse][fach] : null, [klasse, fach])
+  const data = React.useMemo(() =>
+      klasse && fach && schuelerData[klasse][fach] ? schuelerData[klasse][fach] : null,
+      [klasse, fach]);
+
+  console.log(data);
 
   return (
     <div>
@@ -20,7 +24,7 @@ const StudentTable = ({ klasse, fach }) => {
           <div className="student-bracket">{el}</div>
         ))}
       </div>
-      {data && data.map((student) => (
+      {data && data?.map((student) => (
         <StudentTableRow key={`${fach}${student.id}`} student={student} />
       ))}
     </div>
