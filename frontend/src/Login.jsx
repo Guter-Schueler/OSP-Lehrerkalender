@@ -14,10 +14,10 @@ export default function Login() {
       )}
       <form onSubmit={login}>
         <label htmlFor="userName">Username</label>
-        <input id="userName" type="text"></input>
+        <input required id="userName" type="text"></input>
         <label htmlFor="password">Passwort</label>
-        <input id="password" type="password"></input>
-        <input type="submit" value="Submit" />
+        <input required id="password" type="password"></input>
+        <input type="submit" value="Einloggen" />
       </form>
     </div>
   );
