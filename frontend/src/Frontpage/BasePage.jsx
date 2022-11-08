@@ -32,9 +32,12 @@ export default function BasePage() {
       </div>
 
       <div className="content-page">
-        <Tagesuebersicht />
+        <div className="side-content-wrap">
+          <Tagesuebersicht />
+        </div>
         <div className="center-bar" />
-        <Tagesuebersicht />
+        <div className="side-content-wrap">
+        </div>
       </div>
     </div>
   );
