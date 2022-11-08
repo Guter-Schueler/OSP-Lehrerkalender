@@ -10,24 +10,26 @@ const StudentTableRow = ({ student }) => {
   }
 
   return (
-    <div onClick={handleModalToggle} className="student-row-wrap">
-      <InputModal modalToggle={modalToggle} handleModalToggle={handleModalToggle} />
-      <div className="student-bracket" key={student.vorname}>
-        {student.vorname}
-      </div>
-      <div className="student-bracket" key={student.nachname}>
-        {student.nachname}
-      </div>
-      <div className="student-bracket" key={student.mndNote}>
-        {student.mndNote}
-      </div>
-      <div className="student-bracket" key={student.schrfNote}>
-        {student.schrfNote}
-      </div>
-      <div className="student-bracket" key={student.bemerkung}>
-        {student.bemerkung}
-      </div>
-    </div>
+    <>
+        <div onClick={handleModalToggle} className="student-row-wrap">
+          <div className="student-bracket" key={student.vorname}>
+            {student.vorname}
+          </div>
+          <div className="student-bracket" key={student.nachname}>
+            {student.nachname}
+          </div>
+          <div className="student-bracket" key={student.mndNote}>
+            {student.mndNote}
+          </div>
+          <div className="student-bracket" key={student.schrfNote}>
+            {student.schrfNote}
+          </div>
+          <div className="student-bracket" key={student.bemerkung}>
+            {student.bemerkung}
+          </div>
+        </div>
+        <InputModal modalToggle={modalToggle} handleModalToggle={handleModalToggle} />
+    </>
   );
 };
 
