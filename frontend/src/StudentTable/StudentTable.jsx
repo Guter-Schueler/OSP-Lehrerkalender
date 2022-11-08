@@ -15,8 +15,6 @@ const StudentTable = ({ klasse, fach }) => {
       klasse && fach && schuelerData[klasse][fach] ? schuelerData[klasse][fach] : null,
       [klasse, fach]);
 
-  console.log(data);
-
   return (
     <div>
       <div className="student-row-wrap-head">

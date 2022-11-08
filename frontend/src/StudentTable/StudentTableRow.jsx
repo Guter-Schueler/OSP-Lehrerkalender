@@ -1,9 +1,17 @@
 import React from 'react';
 import './styles.scss';
+import InputModal from "./InputModal/InputModal";
 
 const StudentTableRow = ({ student }) => {
+  const [modalToggle, setModalToggle] = React.useState(false);
+
+  const handleModalToggle = () => {
+      setModalToggle(!modalToggle);
+  }
+
   return (
-    <div className="student-row-wrap">
+    <div onClick={handleModalToggle} className="student-row-wrap">
+      <InputModal modalToggle={modalToggle} handleModalToggle={handleModalToggle} />
       <div className="student-bracket" key={student.vorname}>
         {student.vorname}
       </div>
