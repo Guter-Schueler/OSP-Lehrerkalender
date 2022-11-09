@@ -2,14 +2,17 @@ import React from 'react';
 import './styles.scss';
 import Dropdown from './Dropdown.jsx';
 import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
+import StudentTable from "../StudentTable/StudentTable";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function BasePage() {
-  // TODO: folgende zwei const mit Daten aus der Datenbank ersetzen:
   const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
   const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
 
   const [selectedKlasse, selectKlasse] = React.useState('');
   const [selectedFach, selectFach] = React.useState('');
+  const [startDate, setStartDate] = React.useState(new Date());
 
   return (
     <div>
@@ -27,8 +30,12 @@ export default function BasePage() {
           setState={selectFach}
           selectedOption={selectedFach}
         />
-
-        <button className="datepicker">Datepicker</button>
+        <div className="datepicker-position">
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+          />
+        </div>
       </div>
 
       <div className="content-page">
@@ -37,6 +44,7 @@ export default function BasePage() {
         </div>
         <div className="center-bar" />
         <div className="side-content-wrap">
+          <StudentTable klasse={selectedKlasse} fach={selectedFach} />
         </div>
       </div>
     </div>
