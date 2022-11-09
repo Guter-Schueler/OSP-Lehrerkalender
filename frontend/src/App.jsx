@@ -6,7 +6,7 @@ import BasePage from './Frontpage/BasePage';
 function App() {
   return (
     <div id="page-wrapper">
-      <BasePage />
+      <Login />
     </div>
   );
 }
