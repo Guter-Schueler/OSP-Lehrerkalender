@@ -45,7 +45,7 @@ const userStore = create((set, get) => ({
 
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
-  showBasePage: sessionStorage.getItem("showBasePage"),
+  showBasePage: sessionStorage.getItem('showBasePage'),
 
   login: async (e) => {
     e.preventDefault();
@@ -55,11 +55,15 @@ const userStore = create((set, get) => ({
     })
       .then((response) => {
         cookie.set('token', response.token);
-        set({ userToken: response.token, loginError: false, showBasePage: true});
-        sessionStorage.setItem("showBasePage", true);
+        set({
+          userToken: response.token,
+          loginError: false,
+          showBasePage: true,
+        });
+        sessionStorage.setItem('showBasePage', true);
       })
       .catch((err) => {
-        set({ loginError: err.message });
+        set({ loginError: 'Falscher Username oder Passwort!' });
       });
   },
 

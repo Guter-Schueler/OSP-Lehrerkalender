@@ -4,7 +4,6 @@ import './login.scss';
 
 export default function Login() {
   const { login, loginError } = userStore();
-
   return (
     <div className="loginWrapper">
       {loginError && (
