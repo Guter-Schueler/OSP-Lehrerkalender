@@ -27,7 +27,7 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
                     <div className="grade-input-wrap">
                         <div className="modal-field">
                             <label htmlFor="grade">
-                               Mündliche Note:{' '}
+                               Noten:{' '}
                             </label>
                             <input id="grade" type="number" min="1" max="6" />
                         </div>
