@@ -138,6 +138,13 @@ const userStore = create((set, get) => ({
       });
   },
 
+  getKlassen: async (e) => {
+    e.preventDefault();
+    const res = myfetch(backendPath + '/klassen');
+
+    return res;
+  },
+
   addKlassen: async (e) => {
     e.preventDefault();
     const { getKlassen, setUnitArray, replaceAnimatedElement } = get();
@@ -158,12 +165,6 @@ const userStore = create((set, get) => ({
       .catch((err) => {
         // replaceAnimatedElement(err.message, true);
       });
-  },
-
-  getKlassen: async () => {
-    const res = myfetch(backendPath + '/klassen');
-
-    return res;
   },
 
   submit: async (e) => {

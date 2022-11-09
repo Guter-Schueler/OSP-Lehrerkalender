@@ -5,8 +5,11 @@ import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
 import StudentTable from "../StudentTable/StudentTable";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import userStore from "../store";
 
 export default function BasePage() {
+  const { getKlassen } = userStore();
+
   const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
   const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
 
