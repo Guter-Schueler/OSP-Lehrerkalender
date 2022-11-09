@@ -5,8 +5,8 @@ import '../../Frontpage/styles.scss';
 const ModalFrame = ({children, modalToggle, handleModalToggle, onSubmit}) => {
 
     const closeModal = () => {
-        handleModalToggle();
         onSubmit();
+        handleModalToggle();
     }
 
     const customStyles = {

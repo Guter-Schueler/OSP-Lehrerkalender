@@ -3,6 +3,7 @@ import './styles.scss';
 import Dropdown from './Dropdown.jsx';
 import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
 import StudentTable from "../StudentTable/StudentTable";
+import DatePicker from "react-datepicker";
 
 export default function BasePage() {
   // TODO: folgende zwei const mit Daten aus der Datenbank ersetzen:
@@ -29,7 +30,7 @@ export default function BasePage() {
           selectedOption={selectedFach}
         />
 
-        <button className="datepicker">Datepicker</button>
+        <DatePicker />
       </div>
 
       <div className="content-page">

@@ -7,15 +7,11 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
 
     const { submitStudentInfo } = userStore();
 
-    const onSubmit = () => {
-        submitStudentInfo()
-    }
-
     return (
         <ModalFrame
             modalToggle={modalToggle}
             handleModalToggle={handleModalToggle}
-            onSubmit={onSubmit}
+            onSubmit={submitStudentInfo}
         >
             <div>
                 <div>Klasse: {klasse}</div>
@@ -23,7 +19,7 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
                 <div>Schüler: {student.vorname} {student.nachname}</div>
             </div>
             <div className="form-wrap">
-                <form type="submit" className="modal-form">
+                <form onSubmit={submitStudentInfo} className="modal-form">
                     <div className="grade-input-wrap">
                         <label htmlFor="oral-grading">
                            Mündliche Note:{' '}
@@ -50,7 +46,7 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
                         <label htmlFor="comment">
                            Bermerkung:{' '}
                         </label>
-                        <input id="comment" type="text" />
+                        <input type="submit" id="comment" type="text" />
                     </div>
                 </form>
             </div>
