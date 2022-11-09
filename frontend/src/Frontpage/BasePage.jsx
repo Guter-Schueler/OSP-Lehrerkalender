@@ -22,16 +22,12 @@ export default function BasePage() {
   React.useEffect(() => {
     getKlassen().then((res) => {
       const helper = [];
-      for(let i=0; i<res.length; ++i) {
-        helper.push(res[i].bezeichnung);
-      }
+      res.map((el) => helper.push(el.bezeichnung))
       setKlassenArray(helper);
     },
     getFaecher().then((res) => {
       const helper = [];
-      for(let i=0; i<res.length; ++i) {
-        helper.push(res[i].bezeichnung);
-      }
+      res.map((el) => helper.push(el.bezeichnung))
       setFaecherArray(helper);
     })
     )
