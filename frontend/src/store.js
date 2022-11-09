@@ -60,7 +60,7 @@ const userStore = create((set, get) => ({
 
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
-  showBasePage: sessionStorage.getItem("showBasePage"),
+  showBasePage: sessionStorage.getItem('showBasePage'),
 
   replaceAnimatedElement: (message, isError) => {
     const messageBox = document.getElementById('messageBox');
@@ -81,8 +81,12 @@ const userStore = create((set, get) => ({
     })
       .then((response) => {
         cookie.set('token', response.token);
-        set({ userToken: response.token, loginError: false, showBasePage: true});
-        sessionStorage.setItem("showBasePage", true);
+        set({
+          userToken: response.token,
+          loginError: false,
+          showBasePage: true,
+        });
+        sessionStorage.setItem('showBasePage', true);
       })
       .catch((err) => {
         set({ loginError: err.message });
@@ -91,9 +95,55 @@ const userStore = create((set, get) => ({
 
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   categoryArray: [],
+  unitArray: [],
+  KalenderBemerkungenArray: [],
+  addingCategory: false,
+  addingUnit: false,
+
+  replaceAnimatedElement: (message, isError) => {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.style.opacity = 1;
+    messageBox.classList.toggle('errorBox', isError);
+    messageBox.classList.toggle('successBox', !isError);
+    messageBox.innerText = message;
+    setTimeout(() => {
+      messageBox.style.opacity = 0;
+    }, 2000);
+  },
+
+  setAddingCategory: (addingCategory) => {
+    set({ addingCategory });
+  },
+
+  setAddingUnit: (addingUnit) => {
+    set({ addingUnit });
+  },
+
+  setArticleArray: (articleArray) => {
+    set({ articleArray });
+  },
 
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
+  },
+
+  setUnitArray: (unitArray) => {
+    set({ unitArray });
+  },
+
+  setKalenderBemerkungenArray: (KalenderBemerkungenArray) => {
+    set({ KalenderBemerkungenArray });
+  },
+
+  getKalenderBemerkungen: async () => {
+    const res = myfetch(backendPath + '/kalenderBemerkungen');
+
+    return res;
+  },
+
+  addKalenderBemerkungen: async (e) => {
+    e.preventDefault();
+    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {});
   },
 
   getArticles: async () => {

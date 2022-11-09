@@ -1,7 +1,14 @@
 import React from 'react';
+import userStore from '../store';
 
-function sendData() {
-  const weekDays = document.getElementsByClassName('day-input');
+function sendData(event) {
+  const dayData = {
+    lehrerId: 1,
+    datum: '2022-11-09',
+    bemerkung: event.target.value,
+  };
+  // const { addKalenderBemerkungen } = userStore();
+  // addKalenderBemerkungen();
 }
 
 export default function Day(dayName) {

@@ -197,6 +197,39 @@ app.post('/noten', checkToken, (req, res) => {
   );
 });
 
+app.get('/kalenderBemerkungen', checkToken, (req, res) => {
+  const response = db.all(
+    'SELECT * FROM kalenderBemerkungen',
+    function (err, rows) {
+      res.send(rows);
+    }
+  );
+  return response;
+});
+
+// Wann wird in noten was geposted und wer darf das ? dementsprechend muss hier angepasst werden
+app.post('/kalenderBemerkungen', checkToken, (req, res) => {
+  db.get(
+    'INSERT INTO kalenderBemerkungen (lehrerId, bemerkung, datum) VALUES ( $lehrerId, $bemerkung, $datum)',
+    {
+      $lehrerId: req.body.lehrerId,
+      $datum: req.body.datum,
+      $bemerkung: req.body.bemerkungen,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
 app.get('/schueler', checkToken, (req, res) => {
   const response = db.all('SELECT * FROM schueler', function (err, rows) {
     res.send(rows);
