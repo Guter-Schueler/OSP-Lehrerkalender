@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './styles.scss';
 import Dropdown from './Dropdown.jsx';
 import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
