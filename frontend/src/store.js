@@ -42,32 +42,25 @@ const myfetch = async (
 const userStore = create((set, get) => ({
   // all sites ---------------------------------------------------------------------------------------------------------------------
   userToken: cookie.get('token'),
+  selectedDate: new Date(),
+  klassenArray: [''],
+  faecherArray: [''],
+
+  setSelectedDate: (selectedDate) => {
+    set({ selectedDate });
+  },
+
+  setKlassenArray: (klassenArray) => {
+    set({ klassenArray });
+  },
+
+  setFaecherArray: (faecherArray) => {
+    set({ faecherArray });
+  },
 
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
-
-  login: async (e) => {
-    e.preventDefault();
-    myfetch(backendPath + '/login', 'POST', {
-      userName: document.getElementById('userName').value,
-      password: document.getElementById('password').value,
-    })
-      .then((response) => {
-        cookie.set('token', response.token);
-        set({ userToken: response.token, loginError: false });
-        window.location.href = `${frontendPath}/Card`;
-      })
-      .catch((err) => {
-        set({ loginError: err.message });
-      });
-  },
-
-  // Card ---------------------------------------------------------------------------------------------------------------------
-  articleArray: [],
-  categoryArray: [],
-  unitArray: [],
-  addingCategory: false,
-  addingUnit: false,
+  showBasePage: sessionStorage.getItem("showBasePage"),
 
   replaceAnimatedElement: (message, isError) => {
     const messageBox = document.getElementById('messageBox');
@@ -80,24 +73,27 @@ const userStore = create((set, get) => ({
     }, 2000);
   },
 
-  setAddingCategory: (addingCategory) => {
-    set({ addingCategory });
+  login: async (e) => {
+    e.preventDefault();
+    myfetch(backendPath + '/login', 'POST', {
+      userName: document.getElementById('userName').value,
+      password: document.getElementById('password').value,
+    })
+      .then((response) => {
+        cookie.set('token', response.token);
+        set({ userToken: response.token, loginError: false, showBasePage: true});
+        sessionStorage.setItem("showBasePage", true);
+      })
+      .catch((err) => {
+        set({ loginError: err.message });
+      });
   },
 
-  setAddingUnit: (addingUnit) => {
-    set({ addingUnit });
-  },
-
-  setArticleArray: (articleArray) => {
-    set({ articleArray });
-  },
+  // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
+  categoryArray: [],
 
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
-  },
-
-  setUnitArray: (unitArray) => {
-    set({ unitArray });
   },
 
   getArticles: async () => {
@@ -106,85 +102,55 @@ const userStore = create((set, get) => ({
     return res;
   },
 
-  getCategory: async () => {
-    const res = myfetch(backendPath + '/category');
-
-    return res;
+  getFaecher: async () => {
+    return myfetch(backendPath + '/faecher');
   },
 
-  validateNumber: () => {
-    let value = parseFloat(document.getElementById('price').value);
-    document.getElementById('price').value = value.toFixed(2);
-  },
-
-  addCategory: async (e) => {
-    const { getCategory, setCategoryArray, replaceAnimatedElement } = get();
+  addFaecher: async (e) => {
+    const { getCategory, setCategoryArray } = get();
     e.preventDefault();
 
-    myfetch(backendPath + '/category', 'POST', {
-      category: document.getElementById('addCategoryInput').value,
+    myfetch(backendPath + '/faecher', 'POST', {
+      // muss noch id vergeben werden
+      //   bezeichnung: document.getElementById('userName').value,
+      //   kuerzel: document.getElementById('password').value,
     })
       .then((res) => {
         getCategory().then((json) => {
           setCategoryArray(json);
         });
-        document.getElementById('addCategoryInput').value = '';
-        replaceAnimatedElement(res.message, false);
+
+        // document.getElementById('userName').value = '';
+        // document.getElementById('password').value = '';
       })
       .catch((err) => {
-        replaceAnimatedElement(err.message, true);
+        // replaceAnimatedElement(err.message, true);
       });
   },
 
-  addUnit: async (e) => {
-    const { getUnit, setUnitArray, replaceAnimatedElement } = get();
+  getKlassen: async () => {
+    return await myfetch(backendPath + '/klassen');
+  },
 
+  addKlassen: async (e) => {
     e.preventDefault();
-    myfetch(backendPath + '/units', 'POST', {
-      unit: document.getElementById('addUnitInput').value,
+    const { getKlassen, setUnitArray, replaceAnimatedElement } = get();
+
+    myfetch(backendPath + '/klassen', 'POST', {
+      //  Muss noch geändert werden.
+      //   bezeichnung: document.getElementById('userName').value,
+      //   kuerzel: document.getElementById('password').value,
     })
       .then((res) => {
-        getUnit().then((json) => {
+        getKlassen().then((json) => {
           setUnitArray(json);
         });
 
-        document.getElementById('addUnitInput').value = '';
-        replaceAnimatedElement(res.message, false);
+        document.getElementById('userName').value = '';
+        // replaceAnimatedElement(res.message, false);
       })
       .catch((err) => {
-        replaceAnimatedElement(err.message, true);
-      });
-  },
-
-  getUnit: async () => {
-    const res = myfetch(backendPath + '/units');
-
-    return res;
-  },
-
-  submit: async (e) => {
-    e.preventDefault();
-    const { getArticles, setArticleArray, replaceAnimatedElement } = get();
-    myfetch(backendPath + '/articles', 'POST', {
-      newItem: {
-        description:
-          document.getElementById('description').value.charAt(0).toUpperCase() +
-          document.getElementById('description').value.slice(1),
-        category: document.getElementById('category').value,
-        price: document.getElementById('price').value,
-        unit: document.getElementById('unit').value,
-      },
-    })
-      .then((res) => {
-        getArticles().then((json) => {
-          setArticleArray(json);
-        });
-        document.getElementById('price').value = '';
-        document.getElementById('description').value = '';
-        replaceAnimatedElement(res.message, false);
-      })
-      .catch((err) => {
-        replaceAnimatedElement(err.message, true);
+        // replaceAnimatedElement(err.message, true);
       });
   },
 
@@ -201,8 +167,8 @@ const userStore = create((set, get) => ({
         bemerkung: document.getElementById('comment').value,
       },
     }).catch((err) => {
-        console.error(err);
-      });
+      console.error(err);
+    });
   },
 }));
 

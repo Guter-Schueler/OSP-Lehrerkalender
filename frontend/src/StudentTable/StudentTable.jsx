@@ -19,7 +19,7 @@ const StudentTable = ({ klasse, fach }) => {
     <div>
       <div className="student-row-wrap-head">
         {headers.map((el) => (
-          <div className="student-bracket">{el}</div>
+          <div key={el} className="student-bracket">{el}</div>
         ))}
       </div>
       {data && data?.map((student) => (
