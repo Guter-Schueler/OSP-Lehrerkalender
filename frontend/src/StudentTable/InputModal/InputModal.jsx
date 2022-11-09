@@ -21,32 +21,24 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
             <div className="form-wrap">
                 <form onSubmit={submitStudentInfo} className="modal-form">
                     <div className="grade-input-wrap">
-                        <label htmlFor="oral-grading">
-                           Mündliche Note:{' '}
-                        </label>
-                        <input id="oral-grading" type="number" min="1" max="6" />
-                        <br/><br/>
-                        <label htmlFor="grading">
-                           Klausurnoten:
-                        </label>
-                        <label htmlFor="exam-1-grading">
-                           1. Klausur:{' '}
-                        </label>
-                        <input id="exam-1-grading" type="number" min="1" max="6" />
-                        <label htmlFor="exam-2-grading">
-                           2. Klausur:{' '}
-                        </label>
-                        <input id="exam-2-grading" type="number" min="1" max="6" />
-                        <label htmlFor="exam-3-grading">
-                           3. Klausur:{' '}
-                        </label>
-                        <input id="exam-3-grading" type="number" min="1" max="6" />
-                    </div>
-                    <div className="comment-input-wrap">
-                        <label htmlFor="comment">
-                           Bermerkung:{' '}
-                        </label>
-                        <input type="submit" id="comment" type="text" />
+                        <div className="modal-field">
+                            <label htmlFor="grade">
+                               Mündliche Note:{' '}
+                            </label>
+                            <input id="grade" type="number" min="1" max="6" />
+                        </div>
+                        <div className="modal-field">
+                            <label htmlFor="written-grading">
+                               Notentyp:
+                            </label>
+                            <div>dropdown</div>
+                        </div>
+                        <div className="modal-field">
+                            <label htmlFor="comment">
+                               Bermerkung:{' '}
+                            </label>
+                            <input id="comment" type="text" />
+                        </div>
                     </div>
                 </form>
             </div>

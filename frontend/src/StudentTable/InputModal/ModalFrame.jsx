@@ -11,10 +11,10 @@ const ModalFrame = ({children, modalToggle, handleModalToggle, onSubmit}) => {
 
     const customStyles = {
       content: {
-        top: '20%',
+        top: '35%',
         left: '20%',
         right: '20%',
-        bottom: '20%',
+        bottom: '35%',
         display: 'flex',
       },
     };
