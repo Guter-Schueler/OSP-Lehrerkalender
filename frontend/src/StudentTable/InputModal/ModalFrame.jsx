@@ -5,16 +5,16 @@ import '../../Frontpage/styles.scss';
 const ModalFrame = ({children, modalToggle, handleModalToggle, onSubmit}) => {
 
     const closeModal = () => {
-        handleModalToggle();
         onSubmit();
+        handleModalToggle();
     }
 
     const customStyles = {
       content: {
-        top: '20%',
+        top: '35%',
         left: '20%',
         right: '20%',
-        bottom: '20%',
+        bottom: '35%',
         display: 'flex',
       },
     };
@@ -29,7 +29,7 @@ const ModalFrame = ({children, modalToggle, handleModalToggle, onSubmit}) => {
           >
               {children}
               <button
-                  className="modal-btn"
+                  className="osp-button modal-btn"
                   type="submit"
                   onClick={closeModal}
               >

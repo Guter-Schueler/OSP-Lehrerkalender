@@ -45,6 +45,7 @@ const userStore = create((set, get) => ({
 
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
+  showBasePage: sessionStorage.getItem("showBasePage"),
 
   login: async (e) => {
     e.preventDefault();
@@ -54,7 +55,8 @@ const userStore = create((set, get) => ({
     })
       .then((response) => {
         cookie.set('token', response.token);
-        set({ userToken: response.token, loginError: false });
+        set({ userToken: response.token, loginError: false, showBasePage: true});
+        sessionStorage.setItem("showBasePage", true);
       })
       .catch((err) => {
         set({ loginError: err.message });
@@ -138,6 +140,13 @@ const userStore = create((set, get) => ({
       });
   },
 
+  getKlassen: async (e) => {
+    e.preventDefault();
+    const res = myfetch(backendPath + '/klassen');
+
+    return res;
+  },
+
   addKlassen: async (e) => {
     e.preventDefault();
     const { getKlassen, setUnitArray, replaceAnimatedElement } = get();
@@ -158,12 +167,6 @@ const userStore = create((set, get) => ({
       .catch((err) => {
         // replaceAnimatedElement(err.message, true);
       });
-  },
-
-  getKlassen: async () => {
-    const res = myfetch(backendPath + '/klassen');
-
-    return res;
   },
 
   submit: async (e) => {
