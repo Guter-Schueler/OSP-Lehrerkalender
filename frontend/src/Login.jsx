@@ -3,8 +3,7 @@ import userStore from './store.js';
 import './login.scss';
 
 export default function Login() {
-  const { addKlassen, loginError } = userStore();
-
+  const { login, loginError } = userStore();
   return (
     <div className="loginWrapper">
       {loginError && (
@@ -12,7 +11,7 @@ export default function Login() {
           <p>{loginError}</p>
         </div>
       )}
-      <form onSubmit={addKlassen}>
+      <form onSubmit={login}>
         <label htmlFor="userName">Username</label>
         <input required id="userName" type="text"></input>
         <label htmlFor="password">Passwort</label>

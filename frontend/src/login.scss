@@ -20,30 +20,9 @@
   }
 }
 
-.submitMessageWrapper {
-  height: 30px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  #messageBox {
-    opacity: 0;
-    height: 30px;
-    width: fit-content;
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    transition: opacity 0.5s ease-in-out;
-
-    &.errorBox {
-      background-color: red;
-    }
-    &.successBox {
-      background-color: green;
-    }
-  }
+.errorBox {
+  background-color: red;
+}
+.successBox {
+  background-color: green;
 }
