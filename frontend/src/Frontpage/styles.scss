@@ -97,3 +97,26 @@ button:active {
   bottom: 1rem;
   position: absolute;
 }
+
+.form-wrap {
+  width: 70%;
+}
+
+.modal-form {
+  margin-left: 20%;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.grade-input-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+
+.comment-input-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}

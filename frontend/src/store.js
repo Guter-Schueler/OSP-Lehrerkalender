@@ -192,6 +192,23 @@ const userStore = create((set, get) => ({
         replaceAnimatedElement(err.message, true);
       });
   },
+
+  submitStudentInfo: async (e) => {
+    e.preventDefault();
+    myfetch(backendPath + '/studentInfo', 'POST', {
+      newItem: {
+        mndNote: document.getElementById('oral-grading').value,
+        writtenGrades: {
+          exam1: document.getElementById('exam-1-grading').value,
+          exam2: document.getElementById('exam-2-grading').value,
+          exam3: document.getElementById('exam-3-grading').value,
+        },
+        bemerkung: document.getElementById('comment').value,
+      },
+    }).catch((err) => {
+      console.error(err);
+    });
+  },
 }));
 
 export default userStore;

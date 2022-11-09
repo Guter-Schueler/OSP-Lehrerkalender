@@ -308,6 +308,31 @@ app.post('/unterricht', checkToken, (req, res) => {
   );
 });
 
+app.post('/studentInfo', checkToken, (req, res) => {
+  db.get(
+    'INSERT INTO noten (schuelerId, unterrichtId, datum, typ, note, bemerkung) VALUES ($schuelerId, $unterrichtId, $datum, $typ, $note, $bemerkung) ',
+    {
+      $schuelerId: req.body.schuelerId,
+      $unterrichtId: req.body.unterrichtId,
+      $datum: req.body.datum,
+      $typ: req.body.typ,
+      $note: req.body.note,
+      $bemerkung: req.body.bemerkung,
+    },
+    (err) => {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          res.status(400).json({ message: 'An Item cant be added twice' });
+        } else {
+          res.status(500).json({ message: err.message });
+        }
+      } else {
+        res.status(200).json({ message: 'inserted' });
+      }
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

@@ -2,18 +2,19 @@ import React from 'react';
 import Modal from 'react-modal';
 import '../../Frontpage/styles.scss';
 
-const ModalFrame = ({children, modalToggle, handleModalToggle}) => {
+const ModalFrame = ({children, modalToggle, handleModalToggle, onSubmit}) => {
 
     const closeModal = () => {
         handleModalToggle();
+        onSubmit();
     }
 
     const customStyles = {
       content: {
-        top: '10%',
-        left: '10%',
-        right: '10%',
-        bottom: '10%',
+        top: '20%',
+        left: '20%',
+        right: '20%',
+        bottom: '20%',
         display: 'flex',
       },
     };
@@ -29,6 +30,7 @@ const ModalFrame = ({children, modalToggle, handleModalToggle}) => {
               {children}
               <button
                   className="modal-btn"
+                  type="submit"
                   onClick={closeModal}
               >
                   speichern und schließen
