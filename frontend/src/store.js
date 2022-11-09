@@ -52,6 +52,17 @@ const userStore = create((set, get) => ({
   loginError: '',
   showBasePage: sessionStorage.getItem("showBasePage"),
 
+  replaceAnimatedElement: (message, isError) => {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.style.opacity = 1;
+    messageBox.classList.toggle('errorBox', isError);
+    messageBox.classList.toggle('successBox', !isError);
+    messageBox.innerText = message;
+    setTimeout(() => {
+      messageBox.style.opacity = 0;
+    }, 2000);
+  },
+
   login: async (e) => {
     e.preventDefault();
     myfetch(backendPath + '/login', 'POST', {
@@ -70,17 +81,6 @@ const userStore = create((set, get) => ({
 
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   categoryArray: [],
-
-  replaceAnimatedElement: (message, isError) => {
-    const messageBox = document.getElementById('messageBox');
-    messageBox.style.opacity = 1;
-    messageBox.classList.toggle('errorBox', isError);
-    messageBox.classList.toggle('successBox', !isError);
-    messageBox.innerText = message;
-    setTimeout(() => {
-      messageBox.style.opacity = 0;
-    }, 2000);
-  },
 
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
