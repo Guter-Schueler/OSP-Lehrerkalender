@@ -42,6 +42,11 @@ const myfetch = async (
 const userStore = create((set, get) => ({
   // all sites ---------------------------------------------------------------------------------------------------------------------
   userToken: cookie.get('token'),
+  selectedDate: new Date(),
+
+  setSelectedDate: (selectedDate) => {
+    set({ selectedDate });
+  },
 
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
@@ -115,11 +120,8 @@ const userStore = create((set, get) => ({
       });
   },
 
-  getKlassen: async (e) => {
-    e.preventDefault();
-    const res = myfetch(backendPath + '/klassen');
-
-    return res;
+  getKlassen: async () => {
+    return await myfetch(backendPath + '/klassen');
   },
 
   addKlassen: async (e) => {

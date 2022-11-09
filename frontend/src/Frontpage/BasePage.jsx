@@ -8,14 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import userStore from "../store";
 
 export default function BasePage() {
-  const { getKlassen } = userStore();
+  const { getKlassen, selectedDate, setSelectedDate } = userStore();
+  const klassenArray = getKlassen().then((res) => res);
 
   const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
   const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
 
   const [selectedKlasse, selectKlasse] = React.useState('');
   const [selectedFach, selectFach] = React.useState('');
-  const [startDate, setStartDate] = React.useState(new Date());
 
   return (
     <div>
@@ -35,8 +35,8 @@ export default function BasePage() {
         />
         <div className="datepicker-position">
           <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
           />
         </div>
       </div>
