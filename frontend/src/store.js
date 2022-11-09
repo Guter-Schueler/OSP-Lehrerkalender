@@ -55,7 +55,7 @@ const userStore = create((set, get) => ({
       .then((response) => {
         cookie.set('token', response.token);
         set({ userToken: response.token, loginError: false });
-        window.location.href = `${frontendPath}/BasePage`;
+        return true;
       })
       .catch((err) => {
         set({ loginError: 'Falscher Username oder Passwort!' });
