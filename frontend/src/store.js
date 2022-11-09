@@ -206,8 +206,8 @@ const userStore = create((set, get) => ({
         bemerkung: document.getElementById('comment').value,
       },
     }).catch((err) => {
-        console.error(err);
-      });
+      console.error(err);
+    });
   },
 }));
 
