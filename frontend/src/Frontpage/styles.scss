@@ -121,3 +121,39 @@
   display: flex;
   flex-direction: column;
 }
+
+.modal-dropdown-wrap {
+  margin: 0;
+  width: 100%;
+}
+
+.modal-dropdown-btn {
+  width: 100%;
+}
+
+.modal-list-wrap {
+  list-style-type: none;
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 0;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.modal-list-wrap > li {
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 0 4px;
+}
+
+.modal-list-wrap > li:hover {
+  cursor: pointer;
+  box-shadow: inset 0 0 4px grey;
+}
+
+.modal-list-wrap > li:active {
+  cursor: pointer;
+  box-shadow: inset 0 0 4px black;
+}

@@ -2,8 +2,12 @@ import React from 'react';
 import ModalFrame from "./ModalFrame";
 import '../../Frontpage/styles.scss';
 import userStore from "../../store";
+import Dropdown from "../../Frontpage/Dropdown";
 
 const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => {
+
+    const notenTypArray = ['mündlich', 'schriftlich'];
+    const [notenTyp, setNotenTyp] = React.useState('');
 
     const { submitStudentInfo } = userStore();
 
@@ -31,7 +35,15 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
                             <label htmlFor="written-grading">
                                Notentyp:
                             </label>
-                            <div>dropdown</div>
+                            <Dropdown
+                                data={notenTypArray}
+                                selectedOption={notenTyp}
+                                title={notenTyp || 'Noten Typ'}
+                                setState={setNotenTyp}
+                                customStyleClass="modal-dropdown-wrap"
+                                customButtonStyleClass="modal-dropdown-btn"
+                                customListWrapClass="modal-list-wrap"
+                            />
                         </div>
                         <div className="modal-field">
                             <label htmlFor="comment">

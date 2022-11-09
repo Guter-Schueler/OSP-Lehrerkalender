@@ -1,7 +1,15 @@
 import React from 'react';
 import './styles.scss';
 
-const Dropdown = ({ data, title, setState, selectedOption }) => {
+const Dropdown = ({
+      data,
+      title,
+      setState,
+      selectedOption,
+      customStyleClass,
+      customButtonStyleClass,
+    customListWrapClass,
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -14,10 +22,15 @@ const Dropdown = ({ data, title, setState, selectedOption }) => {
   };
 
   return (
-    <div className="dropdown">
-      <button className="osp-button" onClick={handleOpen}>{title}</button>
+    <div className={customStyleClass || "dropdown"}>
+      <button
+          className={customButtonStyleClass || "osp-button"}
+          onClick={handleOpen}
+      >
+        {title}
+      </button>
       {open && (
-        <ul className="list-wrap">
+        <ul className={customListWrapClass || "list-wrap"}>
           {data
             .filter((el) => (selectedOption ? el !== selectedOption : !''))
             .map((entry) => (
