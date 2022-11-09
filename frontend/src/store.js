@@ -43,9 +43,19 @@ const userStore = create((set, get) => ({
   // all sites ---------------------------------------------------------------------------------------------------------------------
   userToken: cookie.get('token'),
   selectedDate: new Date(),
+  klassenArray: [''],
+  faecherArray: [''],
 
   setSelectedDate: (selectedDate) => {
     set({ selectedDate });
+  },
+
+  setKlassenArray: (klassenArray) => {
+    set({ klassenArray });
+  },
+
+  setFaecherArray: (faecherArray) => {
+    set({ faecherArray });
   },
 
   // Login ---------------------------------------------------------------------------------------------------------------------
@@ -93,9 +103,7 @@ const userStore = create((set, get) => ({
   },
 
   getFaecher: async () => {
-    const res = myfetch(backendPath + '/faecher');
-
-    return res;
+    return myfetch(backendPath + '/faecher');
   },
 
   addFaecher: async (e) => {
