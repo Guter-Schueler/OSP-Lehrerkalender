@@ -64,11 +64,7 @@ const userStore = create((set, get) => ({
   },
 
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
-  articleArray: [],
   categoryArray: [],
-  unitArray: [],
-  addingCategory: false,
-  addingUnit: false,
 
   replaceAnimatedElement: (message, isError) => {
     const messageBox = document.getElementById('messageBox');
@@ -81,24 +77,8 @@ const userStore = create((set, get) => ({
     }, 2000);
   },
 
-  setAddingCategory: (addingCategory) => {
-    set({ addingCategory });
-  },
-
-  setAddingUnit: (addingUnit) => {
-    set({ addingUnit });
-  },
-
-  setArticleArray: (articleArray) => {
-    set({ articleArray });
-  },
-
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
-  },
-
-  setUnitArray: (unitArray) => {
-    set({ unitArray });
   },
 
   getArticles: async () => {
@@ -111,11 +91,6 @@ const userStore = create((set, get) => ({
     const res = myfetch(backendPath + '/faecher');
 
     return res;
-  },
-
-  validateNumber: () => {
-    let value = parseFloat(document.getElementById('price').value);
-    document.getElementById('price').value = value.toFixed(2);
   },
 
   addFaecher: async (e) => {
@@ -166,32 +141,6 @@ const userStore = create((set, get) => ({
       })
       .catch((err) => {
         // replaceAnimatedElement(err.message, true);
-      });
-  },
-
-  submit: async (e) => {
-    e.preventDefault();
-    const { getArticles, setArticleArray, replaceAnimatedElement } = get();
-    myfetch(backendPath + '/articles', 'POST', {
-      newItem: {
-        description:
-          document.getElementById('description').value.charAt(0).toUpperCase() +
-          document.getElementById('description').value.slice(1),
-        category: document.getElementById('category').value,
-        price: document.getElementById('price').value,
-        unit: document.getElementById('unit').value,
-      },
-    })
-      .then((res) => {
-        getArticles().then((json) => {
-          setArticleArray(json);
-        });
-        document.getElementById('price').value = '';
-        document.getElementById('description').value = '';
-        replaceAnimatedElement(res.message, false);
-      })
-      .catch((err) => {
-        replaceAnimatedElement(err.message, true);
       });
   },
 
