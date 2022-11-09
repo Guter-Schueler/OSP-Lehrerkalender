@@ -55,7 +55,6 @@ const userStore = create((set, get) => ({
       .then((response) => {
         cookie.set('token', response.token);
         set({ userToken: response.token, loginError: false });
-        window.location.href = `${frontendPath}/Card`;
       })
       .catch((err) => {
         set({ loginError: err.message });
