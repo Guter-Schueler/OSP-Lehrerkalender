@@ -3,29 +3,16 @@ import './styles.scss';
 import Dropdown from './Dropdown.jsx';
 import Tagesuebersicht from '../tagesuebersicht/tagesuebersicht';
 import StudentTable from "../StudentTable/StudentTable";
-import DatePicker, {CalendarContainer} from "react-datepicker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function BasePage() {
-  // TODO: folgende zwei const mit Daten aus der Datenbank ersetzen:
   const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
   const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
 
   const [selectedKlasse, selectKlasse] = React.useState('');
   const [selectedFach, selectFach] = React.useState('');
   const [startDate, setStartDate] = React.useState(new Date());
-
-  const MyContainer = ({ className, children }) => {
-    return (
-      <div style={{ padding: "16px", background: "#216ba5", color: "#fff" }}>
-        <CalendarContainer className={className}>
-          <div style={{ background: "#f0f0f0" }}>
-            What is your favorite day?
-          </div>
-          <div style={{ position: "relative" }}>{children}</div>
-        </CalendarContainer>
-      </div>
-    );
-  };
 
   return (
     <div>
@@ -43,13 +30,12 @@ export default function BasePage() {
           setState={selectFach}
           selectedOption={selectedFach}
         />
-
-        <DatePicker
-            className="datepicker-position"
+        <div className="datepicker-position">
+          <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}
-            calendarContainer={MyContainer}
-        />
+          />
+        </div>
       </div>
 
       <div className="content-page">

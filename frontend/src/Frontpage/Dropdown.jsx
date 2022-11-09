@@ -15,7 +15,7 @@ const Dropdown = ({ data, title, setState, selectedOption }) => {
 
   return (
     <div className="dropdown">
-      <button onClick={handleOpen}>{title}</button>
+      <button className="osp-button" onClick={handleOpen}>{title}</button>
       {open && (
         <ul className="list-wrap">
           {data

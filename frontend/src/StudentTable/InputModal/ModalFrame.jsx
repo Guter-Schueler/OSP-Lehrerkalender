@@ -29,7 +29,7 @@ const ModalFrame = ({children, modalToggle, handleModalToggle, onSubmit}) => {
           >
               {children}
               <button
-                  className="modal-btn"
+                  className="osp-button modal-btn"
                   type="submit"
                   onClick={closeModal}
               >
