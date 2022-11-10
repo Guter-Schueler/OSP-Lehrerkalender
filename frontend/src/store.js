@@ -42,11 +42,37 @@ const myfetch = async (
 const userStore = create((set, get) => ({
   // all sites ---------------------------------------------------------------------------------------------------------------------
   userToken: cookie.get('token'),
+  selectedDate: new Date(),
+  klassenArray: [''],
+  faecherArray: [''],
+
+  setSelectedDate: (selectedDate) => {
+    set({ selectedDate });
+  },
+
+  setKlassenArray: (klassenArray) => {
+    set({ klassenArray });
+  },
+
+  setFaecherArray: (faecherArray) => {
+    set({ faecherArray });
+  },
 
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
   showBasePage: sessionStorage.getItem('showBasePage'),
   lehrerId: sessionStorage.getItem('lehrerId'),
+
+  replaceAnimatedElement: (message, isError) => {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.style.opacity = 1;
+    messageBox.classList.toggle('errorBox', isError);
+    messageBox.classList.toggle('successBox', !isError);
+    messageBox.innerText = message;
+    setTimeout(() => {
+      messageBox.style.opacity = 0;
+    }, 2000);
+  },
 
   login: async (e) => {
     e.preventDefault();
@@ -63,6 +89,7 @@ const userStore = create((set, get) => ({
         });
         sessionStorage.setItem('showBasePage', true);
         sessionStorage.setItem('lehrerId', response.lehrerId);
+        
       })
       .catch((err) => {
         set({ loginError: 'Falscher Username oder Passwort!' });
@@ -70,9 +97,9 @@ const userStore = create((set, get) => ({
   },
 
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
-  articleArray: [],
   categoryArray: [],
   unitArray: [],
+  kalenderBemerkungenArray: [],
   addingCategory: false,
   addingUnit: false,
 
@@ -107,6 +134,21 @@ const userStore = create((set, get) => ({
     set({ unitArray });
   },
 
+  setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
+    set({ kalenderBemerkungenArray });
+  },
+
+  getKalenderBemerkungen: async () => {
+    const res = myfetch(backendPath + '/kalenderBemerkungen');
+
+    return res;
+  },
+
+  addKalenderBemerkungen: async (e) => {
+    e.preventDefault();
+    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {});
+  },
+
   getArticles: async () => {
     const res = myfetch(backendPath + '/articles');
 
@@ -114,14 +156,7 @@ const userStore = create((set, get) => ({
   },
 
   getFaecher: async () => {
-    const res = myfetch(backendPath + '/faecher');
-
-    return res;
-  },
-
-  validateNumber: () => {
-    let value = parseFloat(document.getElementById('price').value);
-    document.getElementById('price').value = value.toFixed(2);
+    return myfetch(backendPath + '/faecher');
   },
 
   addFaecher: async (e) => {
@@ -146,11 +181,8 @@ const userStore = create((set, get) => ({
       });
   },
 
-  getKlassen: async (e) => {
-    e.preventDefault();
-    const res = myfetch(backendPath + '/klassen');
-
-    return res;
+  getKlassen: async () => {
+    return await myfetch(backendPath + '/klassen');
   },
 
   addKlassen: async (e) => {
@@ -172,32 +204,6 @@ const userStore = create((set, get) => ({
       })
       .catch((err) => {
         // replaceAnimatedElement(err.message, true);
-      });
-  },
-
-  submit: async (e) => {
-    e.preventDefault();
-    const { getArticles, setArticleArray, replaceAnimatedElement } = get();
-    myfetch(backendPath + '/articles', 'POST', {
-      newItem: {
-        description:
-          document.getElementById('description').value.charAt(0).toUpperCase() +
-          document.getElementById('description').value.slice(1),
-        category: document.getElementById('category').value,
-        price: document.getElementById('price').value,
-        unit: document.getElementById('unit').value,
-      },
-    })
-      .then((res) => {
-        getArticles().then((json) => {
-          setArticleArray(json);
-        });
-        document.getElementById('price').value = '';
-        document.getElementById('description').value = '';
-        replaceAnimatedElement(res.message, false);
-      })
-      .catch((err) => {
-        replaceAnimatedElement(err.message, true);
       });
   },
 

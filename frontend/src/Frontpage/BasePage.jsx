@@ -8,35 +8,60 @@ import "react-datepicker/dist/react-datepicker.css";
 import userStore from "../store";
 
 export default function BasePage() {
-  const { getKlassen } = userStore();
+  const {
+    getKlassen,
+    getFaecher,
+    selectedDate,
+    setSelectedDate,
+    klassenArray,
+    setKlassenArray,
+    faecherArray,
+    setFaecherArray,
+  } = userStore();
 
-  const klassenDropdown = ['FI005', 'FI006', 'FI007', 'FI008', 'FI009'];
-  const faecherDropdown = ['DEU', 'FEN', 'FU0', 'GiD', 'FU1'];
+  React.useEffect(() => {
+    getKlassen().then((res) => {
+      const helper = [];
+      for(let i=0; i<res.length; ++i) {
+        helper.push(res[i].bezeichnung);
+      }
+      setKlassenArray(helper);
+    },
+    getFaecher().then((res) => {
+      const helper = [];
+      for(let i=0; i<res.length; ++i) {
+        helper.push(res[i].bezeichnung);
+      }
+      setFaecherArray(helper);
+    })
+    )
+  }, []);
 
   const [selectedKlasse, selectKlasse] = React.useState('');
   const [selectedFach, selectFach] = React.useState('');
-  const [startDate, setStartDate] = React.useState(new Date());
 
   return (
     <div>
       <div className="header-bar">
         <Dropdown
-          data={klassenDropdown}
+          data={klassenArray}
           title={selectedKlasse || 'Klasse'}
           setState={selectKlasse}
           selectedOption={selectedKlasse}
         />
 
         <Dropdown
-          data={faecherDropdown}
+          data={faecherArray}
           title={selectedFach || 'Fach'}
           setState={selectFach}
           selectedOption={selectedFach}
         />
         <div className="datepicker-position">
           <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            dateFormat="yyyy/MM/dd"
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            className="custom-date-picker-styles"
           />
         </div>
       </div>
