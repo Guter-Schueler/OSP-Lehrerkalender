@@ -103,17 +103,6 @@ const userStore = create((set, get) => ({
   addingCategory: false,
   addingUnit: false,
 
-  replaceAnimatedElement: (message, isError) => {
-    const messageBox = document.getElementById('messageBox');
-    messageBox.style.opacity = 1;
-    messageBox.classList.toggle('errorBox', isError);
-    messageBox.classList.toggle('successBox', !isError);
-    messageBox.innerText = message;
-    setTimeout(() => {
-      messageBox.style.opacity = 0;
-    }, 2000);
-  },
-
   setWeeklyData: (weeklyData) => {
     set({ weeklyData });
   },
@@ -134,9 +123,7 @@ const userStore = create((set, get) => ({
     set({ categoryArray });
   },
 
-  setUnitArray: (unitArray) => {
-    set({ unitArray });
-  },
+  getSchueler: async () => {return myfetch(backendPath + '/schueler')},
 
   setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
     set({ kalenderBemerkungenArray });
@@ -232,7 +219,7 @@ const userStore = create((set, get) => ({
     const { getKlassen, setUnitArray, replaceAnimatedElement } = get();
 
     myfetch(backendPath + '/klassen', 'POST', {
-      //  Muss noch geändert werden.
+      //   Muss noch geändert werden.
       //   bezeichnung: document.getElementById('userName').value,
       //   kuerzel: document.getElementById('password').value,
     })
