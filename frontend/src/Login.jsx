@@ -13,7 +13,7 @@ export default function Login() {
           <input required id="userName" type="text"></input>
           <label htmlFor="password">Passwort</label>
           <input required id="password" type="password"></input>
-          <input type="submit" value="Einloggen" />
+          <input id="login-button" type="submit" value="Einloggen" />
         </form>
       </div>
     </div>
