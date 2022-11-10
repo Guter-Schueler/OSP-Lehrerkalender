@@ -45,6 +45,16 @@ const userStore = create((set, get) => ({
   selectedDate: new Date(),
   klassenArray: [''],
   faecherArray: [''],
+  selectedKlasse: '',
+  selectedFach: '',
+
+  setFach: (selectedFach) => {
+    set({ selectedFach });
+  },
+
+  setKlasse: (selectedKlasse) => {
+    set({ selectedKlasse });
+  },
 
   setSelectedDate: (selectedDate) => {
     set({ selectedDate });
@@ -62,17 +72,6 @@ const userStore = create((set, get) => ({
   loginError: '',
   showBasePage: sessionStorage.getItem('showBasePage'),
   lehrerId: sessionStorage.getItem('lehrerId'),
-
-  replaceAnimatedElement: (message, isError) => {
-    const messageBox = document.getElementById('messageBox');
-    messageBox.style.opacity = 1;
-    messageBox.classList.toggle('errorBox', isError);
-    messageBox.classList.toggle('successBox', !isError);
-    messageBox.innerText = message;
-    setTimeout(() => {
-      messageBox.style.opacity = 0;
-    }, 2000);
-  },
 
   login: async (e) => {
     e.preventDefault();
@@ -176,11 +175,9 @@ const userStore = create((set, get) => ({
         getWeeklyData().then((json) => {
           let i = 0;
           let helperArray = [];
-          console.log(json[0].bemerkung);
           json.map((el) => helperArray.push(el.bemerkung));
 
           setWeeklyData(helperArray);
-          console.log(helperArray);
         });
       })
       .catch((err) => {
