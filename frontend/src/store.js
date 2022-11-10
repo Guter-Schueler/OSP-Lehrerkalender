@@ -149,10 +149,12 @@ const userStore = create((set, get) => ({
     return myfetch(backendPath + '/faecher');
   },
 
-  getWeeklyData: async () => {
-    const res = myfetch(backendPath + '/kalenderBemerkungen');
+  getUnterricht: async () => {
+    return myfetch(backendPath + '/unterricht')
+  },
 
-    return res;
+  getWeeklyData: async () => {
+    return myfetch(backendPath + '/kalenderBemerkungen');
   },
 
   validateNumber: () => {

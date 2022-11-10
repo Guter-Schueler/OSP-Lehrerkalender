@@ -35,7 +35,7 @@ const Dropdown = ({
             .filter((el) => (
                 selectedOption ? el !== selectedOption : !''))
             .map((entry) => (
-              <li onClick={() => onSelect(entry)}>{entry.bezeichnung}</li>
+              <li onClick={() => onSelect(entry)}>{entry.bezeichnung || entry}</li>
             ))}
         </ul>
       )}

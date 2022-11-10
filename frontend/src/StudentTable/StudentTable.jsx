@@ -1,8 +1,9 @@
 import React from 'react';
 import StudentTableRow from './StudentTableRow';
 import * as schuelerData from './mockSchueler';
+import userStore from "../store";
 
-const StudentTable = ({ klasse, fach }) => {
+const StudentTable = () => {
   const headers = [
     'Vorname',
     'Nachname',
@@ -11,12 +12,22 @@ const StudentTable = ({ klasse, fach }) => {
     'Bemerkung',
   ];
 
-  const myKlasse = klasse.bezeichnung;
-  const myFach = fach.bezeichnung;
+  const {
+    selectedKlasse,
+    selectedFach,
+  } = userStore();
 
-  const data = React.useMemo(() =>
-      myKlasse && myFach && schuelerData[myKlasse][myFach] ? schuelerData[myKlasse][myFach] : null,
-      [klasse, fach]);
+  const myKlasse = selectedKlasse.bezeichnung;
+  const myFach = selectedFach.bezeichnung;
+
+  const data = React.useMemo(() => {
+    if (myKlasse && myFach && schuelerData[myKlasse][myFach]) {
+      return schuelerData[myKlasse][myFach]
+    }
+    return false;
+  },[myKlasse, myFach]);
+
+  let hintMessage = 'Bitte wählen Sie eine Klasse und ein Fach aus.';
 
   return (
     <div>
@@ -27,12 +38,15 @@ const StudentTable = ({ klasse, fach }) => {
       </div>
       {data && data?.map((student) => (
         <StudentTableRow
-            key={`${fach}${student.id}`}
+            key={`${myFach}${student.id}`}
             student={student}
-            klasse={klasse}
-            fach={fach}
+            klasse={myKlasse}
+            fach={myFach}
         />
       ))}
+      <div className="student-table-hint-box">
+        {!data && hintMessage}
+      </div>
     </div>
   );
 };

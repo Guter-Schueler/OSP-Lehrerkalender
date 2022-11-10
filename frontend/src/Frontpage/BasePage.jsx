@@ -71,7 +71,7 @@ export default function BasePage() {
         </div>
         <div className="center-bar" />
         <div className="side-content-wrap">
-          <StudentTable klasse={selectedKlasse} fach={selectedFach} />
+          <StudentTable />
         </div>
       </div>
     </div>

@@ -5,14 +5,20 @@ import Day from './Day';
 
 export default function Tagesuebersicht() {
   const { getKalenderBemerkungen } = userStore();
-  getKalenderBemerkungen().then((response) => {});
+
+  const bemerkungsArray = [];
+
+  getKalenderBemerkungen().then((response) => {
+      bemerkungsArray.push(response)
+  });
+
   return (
     <div id="wochen-wrapper">
-      <Day dayName="Montag" />
-      <Day dayName="Dienstag" />
-      <Day dayName="Mittwoch" />
-      <Day dayName="Donnerstag" />
-      <Day dayName="Freitag" />
+    {
+        Array(4)
+            .fill(0)
+            .map((_, i) => <Day dayNum={i} bemerkungen={bemerkungsArray} />)
+    }
     </div>
   );
 }
