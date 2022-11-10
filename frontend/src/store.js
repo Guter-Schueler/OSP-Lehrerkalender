@@ -149,6 +149,10 @@ const userStore = create((set, get) => ({
     return myfetch(backendPath + '/faecher');
   },
 
+  getUnterricht: async () => {
+    return myfetch(backendPath + '/unterricht')
+  },
+
   getWeeklyData: async () => {
     const res = myfetch(backendPath + '/kalenderBemerkungen');
 
