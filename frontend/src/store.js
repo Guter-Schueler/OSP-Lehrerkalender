@@ -96,10 +96,8 @@ const userStore = create((set, get) => ({
     set({ categoryArray });
   },
 
-  getArticles: async () => {
-    const res = myfetch(backendPath + '/articles');
-
-    return res;
+  getSchueler: async () => {
+    return myfetch(backendPath + '/schueler');
   },
 
   getFaecher: async () => {
@@ -137,7 +135,7 @@ const userStore = create((set, get) => ({
     const { getKlassen, setUnitArray, replaceAnimatedElement } = get();
 
     myfetch(backendPath + '/klassen', 'POST', {
-      //  Muss noch geändert werden.
+      //   Muss noch geändert werden.
       //   bezeichnung: document.getElementById('userName').value,
       //   kuerzel: document.getElementById('password').value,
     })

@@ -11,6 +11,7 @@ export default function BasePage() {
   const {
     getKlassen,
     getFaecher,
+    getSchueler,
     selectedDate,
     setSelectedDate,
     klassenArray,
@@ -21,16 +22,17 @@ export default function BasePage() {
 
   React.useEffect(() => {
     getKlassen().then((res) => {
+      console.log(res)
       const helper = [];
       res.map((el) => helper.push(el.bezeichnung))
       setKlassenArray(helper);
-    },
+    })
     getFaecher().then((res) => {
       const helper = [];
       res.map((el) => helper.push(el.bezeichnung))
       setFaecherArray(helper);
     })
-    )
+    getSchueler().then((res) => console.log(res));
   }, []);
 
   const [selectedKlasse, selectKlasse] = React.useState('');
@@ -40,6 +42,7 @@ export default function BasePage() {
     <div>
       <div className="header-bar">
         <Dropdown
+          key={'klassenDropdown'}
           data={klassenArray}
           title={selectedKlasse || 'Klasse'}
           setState={selectKlasse}
@@ -47,6 +50,7 @@ export default function BasePage() {
         />
 
         <Dropdown
+          key={'faecherDropdown'}
           data={faecherArray}
           title={selectedFach || 'Fach'}
           setState={selectFach}
