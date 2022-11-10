@@ -154,9 +154,7 @@ const userStore = create((set, get) => ({
   },
 
   getWeeklyData: async () => {
-    const res = myfetch(backendPath + '/kalenderBemerkungen');
-
-    return res;
+    return myfetch(backendPath + '/kalenderBemerkungen');
   },
 
   validateNumber: () => {
