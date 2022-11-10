@@ -52,6 +52,7 @@ app.post('/login', (req, res) => {
               res.send({
                 userName: user.vorname,
                 token: jwtValue,
+                lehrerId: user.id,
               });
             } else {
               res.sendStatus(401);
