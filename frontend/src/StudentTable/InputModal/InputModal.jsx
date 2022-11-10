@@ -9,6 +9,9 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
     const notenTypArray = ['mündlich', 'schriftlich'];
     const [notenTyp, setNotenTyp] = React.useState('');
 
+    const myKlasse = klasse.bezeichnung;
+    const myFach = fach.bezeichnung;
+
     const { submitStudentInfo } = userStore();
 
     return (
@@ -18,8 +21,8 @@ const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => 
             onSubmit={submitStudentInfo}
         >
             <div>
-                <div>Klasse: {klasse}</div>
-                <div>Fach: {fach}</div>
+                <div>Klasse: {myKlasse}</div>
+                <div>Fach: {myFach}</div>
                 <div>Schüler: {student.vorname} {student.nachname}</div>
             </div>
             <div className="form-wrap">
