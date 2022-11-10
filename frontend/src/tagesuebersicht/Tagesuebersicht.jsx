@@ -15,7 +15,7 @@ export default function Tagesuebersicht() {
   return (
     <div id="wochen-wrapper">
     {
-        Array(4)
+        Array(5)
             .fill(0)
             .map((_, i) => <Day dayNum={i} bemerkungen={bemerkungsArray} />)
     }
