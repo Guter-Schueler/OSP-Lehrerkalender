@@ -14,11 +14,11 @@ export default function Tagesuebersicht() {
 
   return (
     <div id="wochen-wrapper">
-      <Day dayNum={0} bemerkungen={bemerkungsArray} />
-      <Day dayNum={1} bemerkungen={bemerkungsArray} />
-      <Day dayNum={2} bemerkungen={bemerkungsArray} />
-      <Day dayNum={3} bemerkungen={bemerkungsArray} />
-      <Day dayNum={4} bemerkungen={bemerkungsArray} />
+    {
+        Array(4)
+            .fill(0)
+            .map((_, i) => <Day dayNum={i} bemerkungen={bemerkungsArray} />)
+    }
     </div>
   );
 }
