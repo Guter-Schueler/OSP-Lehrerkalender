@@ -63,17 +63,6 @@ const userStore = create((set, get) => ({
   showBasePage: sessionStorage.getItem('showBasePage'),
   lehrerId: sessionStorage.getItem('lehrerId'),
 
-  replaceAnimatedElement: (message, isError) => {
-    const messageBox = document.getElementById('messageBox');
-    messageBox.style.opacity = 1;
-    messageBox.classList.toggle('errorBox', isError);
-    messageBox.classList.toggle('successBox', !isError);
-    messageBox.innerText = message;
-    setTimeout(() => {
-      messageBox.style.opacity = 0;
-    }, 2000);
-  },
-
   login: async (e) => {
     e.preventDefault();
     myfetch(backendPath + '/login', 'POST', {
