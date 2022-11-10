@@ -4,20 +4,15 @@ import './login.scss';
 
 export default function Login() {
   const { login, loginError } = userStore();
-
   return (
     <div className="loginWrapper">
-      {loginError && (
-        <div className="errorBox">
-          <p>{loginError}</p>
-        </div>
-      )}
+      {loginError && <p className="errorBox">Wrong Credentials!</p>}
       <form onSubmit={login}>
         <label htmlFor="userName">Username</label>
-        <input id="userName" type="text"></input>
+        <input required id="userName" type="text"></input>
         <label htmlFor="password">Passwort</label>
-        <input id="password" type="password"></input>
-        <input type="submit" value="Submit" />
+        <input required id="password" type="password"></input>
+        <input type="submit" value="Einloggen" />
       </form>
     </div>
   );

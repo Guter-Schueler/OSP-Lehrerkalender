@@ -61,6 +61,7 @@ const userStore = create((set, get) => ({
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
   showBasePage: sessionStorage.getItem('showBasePage'),
+  lehrerId: sessionStorage.getItem('lehrerId'),
 
   replaceAnimatedElement: (message, isError) => {
     const messageBox = document.getElementById('messageBox');
@@ -87,9 +88,11 @@ const userStore = create((set, get) => ({
           showBasePage: true,
         });
         sessionStorage.setItem('showBasePage', true);
+        sessionStorage.setItem('lehrerId', response.lehrerId);
+        
       })
       .catch((err) => {
-        set({ loginError: err.message });
+        set({ loginError: 'Falscher Username oder Passwort!' });
       });
   },
 
