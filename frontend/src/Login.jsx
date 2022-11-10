@@ -6,11 +6,7 @@ export default function Login() {
   const { login, loginError } = userStore();
   return (
     <div className="loginWrapper">
-      {loginError && (
-        <div className="errorBox">
-          <p>{loginError}</p>
-        </div>
-      )}
+      {loginError && <p className="errorBox">Wrong Credentials!</p>}
       <form onSubmit={login}>
         <label htmlFor="userName">Username</label>
         <input required id="userName" type="text"></input>

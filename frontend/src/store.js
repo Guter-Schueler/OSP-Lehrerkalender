@@ -46,6 +46,7 @@ const userStore = create((set, get) => ({
   // Login ---------------------------------------------------------------------------------------------------------------------
   loginError: '',
   showBasePage: sessionStorage.getItem('showBasePage'),
+  lehrerId: sessionStorage.getItem('lehrerId'),
 
   login: async (e) => {
     e.preventDefault();
@@ -61,6 +62,7 @@ const userStore = create((set, get) => ({
           showBasePage: true,
         });
         sessionStorage.setItem('showBasePage', true);
+        sessionStorage.setItem('lehrerId', response.lehrerId);
       })
       .catch((err) => {
         set({ loginError: 'Falscher Username oder Passwort!' });

@@ -1,10 +1,10 @@
-@keyframes disappear {
+@keyframes fadein {
   0% {
-    opacity: 1;
+    opacity: 0;
   }
 
   100% {
-    opacity: 0;
+    opacity: 1;
   }
 }
 
@@ -21,8 +21,12 @@
 }
 
 .errorBox {
-  background-color: red;
-}
-.successBox {
-  background-color: green;
+  background-color: rgb(214, 0, 0);
+  color: white;
+  position: relative;
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  margin-top: 20px;
+  animation: fadein 2s;
 }
