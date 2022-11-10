@@ -14,9 +14,15 @@ const StudentTable = ({ klasse, fach }) => {
   const myKlasse = klasse.bezeichnung;
   const myFach = fach.bezeichnung;
 
-  const data = React.useMemo(() =>
-      myKlasse && myFach && schuelerData[myKlasse][myFach] ? schuelerData[myKlasse][myFach] : null,
-      [klasse, fach]);
+  const data = React.useMemo(() => {
+    if (myKlasse && myFach && schuelerData[myKlasse][myFach]) {
+      return schuelerData[myKlasse][myFach]
+    }
+    return false;
+  },[myKlasse, myFach]);
+
+  let hintMessage = 'Bitte wählen Sie eine Klasse und ein Fach aus.'
+
 
   return (
     <div>
@@ -33,6 +39,9 @@ const StudentTable = ({ klasse, fach }) => {
             fach={fach}
         />
       ))}
+      <div className="student-table-hint-box">
+        {!data && hintMessage}
+      </div>
     </div>
   );
 };
