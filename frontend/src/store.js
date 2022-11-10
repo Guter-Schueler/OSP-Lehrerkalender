@@ -89,7 +89,6 @@ const userStore = create((set, get) => ({
         });
         sessionStorage.setItem('showBasePage', true);
         sessionStorage.setItem('lehrerId', response.lehrerId);
-        
       })
       .catch((err) => {
         set({ loginError: 'Falscher Username oder Passwort!' });
@@ -100,6 +99,7 @@ const userStore = create((set, get) => ({
   categoryArray: [],
   unitArray: [],
   kalenderBemerkungenArray: [],
+  weeklyData: [],
   addingCategory: false,
   addingUnit: false,
 
@@ -112,6 +112,10 @@ const userStore = create((set, get) => ({
     setTimeout(() => {
       messageBox.style.opacity = 0;
     }, 2000);
+  },
+
+  setWeeklyData: (weeklyData) => {
+    set({ weeklyData });
   },
 
   setAddingCategory: (addingCategory) => {
@@ -157,6 +161,44 @@ const userStore = create((set, get) => ({
 
   getFaecher: async () => {
     return myfetch(backendPath + '/faecher');
+  },
+
+  getWeeklyData: async () => {
+    const res = myfetch(backendPath + '/kalenderBemerkungen');
+
+    return res;
+  },
+
+  validateNumber: () => {
+    let value = parseFloat(document.getElementById('price').value);
+    document.getElementById('price').value = value.toFixed(2);
+  },
+
+  sendWeeklyData: async (weekDay) => {
+    const { getWeeklyData, setWeeklyData } = get();
+
+    if (document.getElementById(weekDay).value === '') {
+      return;
+    }
+    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {
+      bemerkung: document.getElementById(weekDay).value,
+      datum: '2020-01-01',
+      unterrichtId: 1,
+    })
+      .then((res) => {
+        getWeeklyData().then((json) => {
+          let i = 0;
+          let helperArray = [];
+          console.log(json[0].bemerkung);
+          json.map((el) => helperArray.push(el.bemerkung));
+
+          setWeeklyData(helperArray);
+          console.log(helperArray);
+        });
+      })
+      .catch((err) => {
+        // replaceAnimatedElement(err.message, true);
+      });
   },
 
   addFaecher: async (e) => {
