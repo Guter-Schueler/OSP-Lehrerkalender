@@ -97,6 +97,38 @@ const userStore = create((set, get) => ({
 
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   categoryArray: [],
+  unitArray: [],
+  kalenderBemerkungenArray: [],
+  weeklyData: [],
+  addingCategory: false,
+  addingUnit: false,
+
+  replaceAnimatedElement: (message, isError) => {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.style.opacity = 1;
+    messageBox.classList.toggle('errorBox', isError);
+    messageBox.classList.toggle('successBox', !isError);
+    messageBox.innerText = message;
+    setTimeout(() => {
+      messageBox.style.opacity = 0;
+    }, 2000);
+  },
+
+  setWeeklyData: (weeklyData) => {
+    set({ weeklyData });
+  },
+
+  setAddingCategory: (addingCategory) => {
+    set({ addingCategory });
+  },
+
+  setAddingUnit: (addingUnit) => {
+    set({ addingUnit });
+  },
+
+  setArticleArray: (articleArray) => {
+    set({ articleArray });
+  },
 
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
@@ -104,10 +136,71 @@ const userStore = create((set, get) => ({
 
   getSchueler: async () => {
     return myfetch(backendPath + '/schueler');
+  setUnitArray: (unitArray) => {
+    set({ unitArray });
+  },
+
+  setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
+    set({ kalenderBemerkungenArray });
+  },
+
+  getKalenderBemerkungen: async () => {
+    const res = myfetch(backendPath + '/kalenderBemerkungen');
+
+    return res;
+  },
+
+  addKalenderBemerkungen: async (e) => {
+    e.preventDefault();
+    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {});
+  },
+
+  getArticles: async () => {
+    const res = myfetch(backendPath + '/articles');
+
+    return res;
   },
 
   getFaecher: async () => {
     return myfetch(backendPath + '/faecher');
+  },
+
+  getWeeklyData: async () => {
+    const res = myfetch(backendPath + '/kalenderBemerkungen');
+
+    return res;
+  },
+
+  validateNumber: () => {
+    let value = parseFloat(document.getElementById('price').value);
+    document.getElementById('price').value = value.toFixed(2);
+  },
+
+  sendWeeklyData: async (weekDay) => {
+    const { getWeeklyData, setWeeklyData } = get();
+
+    if (document.getElementById(weekDay).value === '') {
+      return;
+    }
+    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {
+      bemerkung: document.getElementById(weekDay).value,
+      datum: '2020-01-01',
+      unterrichtId: 1,
+    })
+      .then((res) => {
+        getWeeklyData().then((json) => {
+          let i = 0;
+          let helperArray = [];
+          console.log(json[0].bemerkung);
+          json.map((el) => helperArray.push(el.bemerkung));
+
+          setWeeklyData(helperArray);
+          console.log(helperArray);
+        });
+      })
+      .catch((err) => {
+        // replaceAnimatedElement(err.message, true);
+      });
   },
 
   addFaecher: async (e) => {

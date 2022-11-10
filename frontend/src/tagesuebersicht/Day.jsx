@@ -1,14 +1,17 @@
 import React from 'react';
-
-function sendData() {
-  const weekDays = document.getElementsByClassName('day-input');
-}
+import userStore from '../store';
 
 export default function Day(dayName) {
+  const { sendWeeklyData } = userStore();
+
   return (
     <div className="day-wrapper">
       <p className="day">{dayName.dayName}</p>
-      <textarea onBlur={sendData} className="day-input" />
+      <textarea
+        id={dayName.dayName}
+        onBlur={() => sendWeeklyData(dayName.dayName)}
+        className="day-input"
+      />
     </div>
   );
 }
