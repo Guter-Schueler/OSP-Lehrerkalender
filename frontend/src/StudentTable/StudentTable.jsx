@@ -11,8 +11,11 @@ const StudentTable = ({ klasse, fach }) => {
     'Bemerkung',
   ];
 
+  const myKlasse = klasse.bezeichnung;
+  const myFach = fach.bezeichnung;
+
   const data = React.useMemo(() =>
-      klasse && fach && schuelerData[klasse][fach] ? schuelerData[klasse][fach] : null,
+      myKlasse && myFach && schuelerData[myKlasse][myFach] ? schuelerData[myKlasse][myFach] : null,
       [klasse, fach]);
 
   return (

@@ -5,9 +5,7 @@ import Day from './Day';
 
 export default function Tagesuebersicht() {
   const { getKalenderBemerkungen } = userStore();
-  getKalenderBemerkungen().then((response) => {
-    console.log(response);
-  });
+  getKalenderBemerkungen().then((response) => {});
   return (
     <div id="wochen-wrapper">
       <Day dayName="Montag" />

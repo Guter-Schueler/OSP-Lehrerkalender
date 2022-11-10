@@ -11,8 +11,11 @@ export default function BasePage() {
   const {
     getKlassen,
     getFaecher,
-    getSchueler,
     selectedDate,
+    selectedFach,
+    setFach,
+    selectedKlasse,
+    setKlasse,
     setSelectedDate,
     klassenArray,
     setKlassenArray,
@@ -22,21 +25,17 @@ export default function BasePage() {
 
   React.useEffect(() => {
     getKlassen().then((res) => {
-      console.log(res)
       const helper = [];
-      res.map((el) => helper.push(el.bezeichnung))
+      res.map((el) => helper.push(el))
       setKlassenArray(helper);
     })
     getFaecher().then((res) => {
       const helper = [];
-      res.map((el) => helper.push(el.bezeichnung))
+      res.map((el) => helper.push(el))
       setFaecherArray(helper);
     })
-    getSchueler().then((res) => console.log(res));
-  }, []);
-
-  const [selectedKlasse, selectKlasse] = React.useState('');
-  const [selectedFach, selectFach] = React.useState('');
+    console.log(selectedFach, selectedKlasse)
+  }, [selectedFach, selectedKlasse]);
 
   return (
     <div>
@@ -44,17 +43,17 @@ export default function BasePage() {
         <Dropdown
           key={'klassenDropdown'}
           data={klassenArray}
-          title={selectedKlasse || 'Klasse'}
-          setState={selectKlasse}
-          selectedOption={selectedKlasse}
+          title={selectedKlasse.bezeichnung || 'Klasse'}
+          setState={setKlasse}
+          selectedOption={selectedKlasse.bezeichnung}
         />
 
         <Dropdown
           key={'faecherDropdown'}
           data={faecherArray}
-          title={selectedFach || 'Fach'}
-          setState={selectFach}
-          selectedOption={selectedFach}
+          title={selectedFach.bezeichnung || 'Fach'}
+          setState={setFach}
+          selectedOption={selectedFach.bezeichnung}
         />
         <div className="datepicker-position">
           <DatePicker
