@@ -96,7 +96,7 @@ const userStore = create((set, get) => ({
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   categoryArray: [],
   unitArray: [],
-  KalenderBemerkungenArray: [],
+  kalenderBemerkungenArray: [],
   addingCategory: false,
   addingUnit: false,
 
@@ -131,8 +131,8 @@ const userStore = create((set, get) => ({
     set({ unitArray });
   },
 
-  setKalenderBemerkungenArray: (KalenderBemerkungenArray) => {
-    set({ KalenderBemerkungenArray });
+  setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
+    set({ kalenderBemerkungenArray });
   },
 
   getKalenderBemerkungen: async () => {
