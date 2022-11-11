@@ -39,10 +39,8 @@ export default function BasePage() {
     });
   }, [selectedFach, selectedKlasse]);
 
-  const newFaecherArray = unitArray.length >= 1 && Array.from(unitArray.values());
-
-  const newNewFaecherArray = [];
-  newFaecherArray.length >= 1 && newFaecherArray.map((el) => newNewFaecherArray.push(el));
+  const newFaecherArray =
+      unitArray.length >= 1 && Array.from(unitArray.values()).map((el) => el);
 
   return (
     <div className="base-page-wrapper">
@@ -57,7 +55,7 @@ export default function BasePage() {
 
         <Dropdown
           key={'faecherDropdown'}
-          data={newNewFaecherArray}
+          data={newFaecherArray}
           title={selectedFach.bezeichnung || 'Fach'}
           setState={setFach}
           selectedOption={selectedFach.bezeichnung}
