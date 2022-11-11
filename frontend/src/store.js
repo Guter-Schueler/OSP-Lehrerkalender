@@ -190,6 +190,8 @@ const userStore = create((set, get) => ({
       })
       .catch((err) => {
         setShowBasePage(false);
+        cookie.remove('token');
+        sessionStorage.removeItem('showBasePage');
         // replaceAnimatedElement(err.message, true);
       });
   },
@@ -213,6 +215,8 @@ const userStore = create((set, get) => ({
       })
       .catch((err) => {
         setShowBasePage(false);
+        cookie.remove('token');
+        sessionStorage.removeItem('showBasePage');
         // replaceAnimatedElement(err.message, true);
       });
   },
@@ -229,6 +233,8 @@ const userStore = create((set, get) => ({
         })
         .catch((err) => {
           setShowBasePage(false);
+          cookie.remove('token');
+          sessionStorage.removeItem('showBasePage');
           // replaceAnimatedElement(err.message, true);
         });
     }
@@ -253,6 +259,8 @@ const userStore = create((set, get) => ({
       },
     }).catch((err) => {
       setShowBasePage(false);
+      cookie.remove('token');
+      sessionStorage.removeItem('showBasePage');
       console.error(err);
     });
   },
