@@ -4,15 +4,19 @@ import '../../Frontpage/styles.scss';
 import userStore from "../../store";
 import Dropdown from "../../Frontpage/Dropdown";
 
-const InputModal = ({modalToggle, handleModalToggle, student, klasse, fach}) => {
+const InputModal = ({modalToggle, handleModalToggle, student}) => {
 
     const notenTypArray = ['mündlich', 'schriftlich'];
     const [notenTyp, setNotenTyp] = React.useState('');
 
-    const myKlasse = klasse.bezeichnung;
-    const myFach = fach.bezeichnung;
+    const {
+        submitStudentInfo,
+        selectedKlasse,
+        selectedFach,
+    } = userStore();
 
-    const { submitStudentInfo } = userStore();
+    const myKlasse = selectedKlasse.bezeichnung;
+    const myFach = selectedFach.bezeichnung;
 
     return (
         <ModalFrame

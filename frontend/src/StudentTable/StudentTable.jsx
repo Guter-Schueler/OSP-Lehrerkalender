@@ -40,8 +40,6 @@ const StudentTable = () => {
         <StudentTableRow
             key={`${myFach}${student.id}`}
             student={student}
-            klasse={myKlasse}
-            fach={myFach}
         />
       ))}
       <div className="student-table-hint-box">
