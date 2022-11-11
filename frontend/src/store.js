@@ -12,7 +12,7 @@ const frontendPath = `${import.meta.env.VITE_FRONTEND_HOST}:${
   import.meta.env.VITE_FRONTEND_PORT
 }`;
 
-const myfetch = async (
+const customFetch = async (
   path,
   method = 'GET',
   body = {},
