@@ -42,6 +42,10 @@ export default function BasePage() {
   const newFaecherArray =
       unitArray.length >= 1 && Array.from(unitArray.values()).map((el) => el);
 
+  const resetFaecherAuswahl = () => {
+    setFach('')
+  }
+
   return (
     <div className="base-page-wrapper">
       <div className="header-bar">
@@ -51,6 +55,7 @@ export default function BasePage() {
           title={selectedKlasse.bezeichnung || 'Klasse'}
           setState={setKlasse}
           selectedOption={selectedKlasse.bezeichnung}
+          customOnSelect={resetFaecherAuswahl}
         />
 
         <Dropdown

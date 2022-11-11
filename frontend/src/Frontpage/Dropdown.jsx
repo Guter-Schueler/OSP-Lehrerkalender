@@ -9,6 +9,7 @@ const Dropdown = ({
       customStyleClass,
       customButtonStyleClass,
       customListWrapClass,
+      customOnSelect,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -19,6 +20,7 @@ const Dropdown = ({
   const onSelect = (value) => {
     setState(value);
     setOpen(!open);
+    customOnSelect && customOnSelect();
   };
 
   return (
