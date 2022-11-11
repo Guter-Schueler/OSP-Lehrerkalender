@@ -17,7 +17,13 @@ export default function Tagesuebersicht() {
     {
         Array(5)
             .fill(0)
-            .map((_, i) => <Day dayNum={i} bemerkungen={bemerkungsArray} />)
+            .map((_, i) =>
+                <Day
+                    key={i}
+                    dayNum={i}
+                    bemerkungen={bemerkungsArray}
+                />
+            )
     }
     </div>
   );

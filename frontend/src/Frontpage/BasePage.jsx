@@ -21,6 +21,7 @@ export default function BasePage() {
     setKlassenArray,
     faecherArray,
     setFaecherArray,
+    lehrerId,
   } = userStore();
 
   React.useEffect(() => {
@@ -34,8 +35,11 @@ export default function BasePage() {
       res.map((el) => helper.push(el));
       setFaecherArray(helper);
     });
-    console.log(selectedFach, selectedKlasse);
   }, [selectedFach, selectedKlasse]);
+
+  const onDropdownSelect = (dropDownSelection) => {
+    console.log(lehrerId, dropDownSelection)
+  }
 
   return (
     <div className="base-page-wrapper">
@@ -46,6 +50,7 @@ export default function BasePage() {
           title={selectedKlasse.bezeichnung || 'Klasse'}
           setState={setKlasse}
           selectedOption={selectedKlasse.bezeichnung}
+          customOnSelect={onDropdownSelect}
         />
 
         <Dropdown

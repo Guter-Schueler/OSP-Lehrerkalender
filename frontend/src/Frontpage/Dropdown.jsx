@@ -9,6 +9,7 @@ const Dropdown = ({
       customStyleClass,
       customButtonStyleClass,
       customListWrapClass,
+      customOnSelect
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -19,6 +20,7 @@ const Dropdown = ({
   const onSelect = (value) => {
     setState(value);
     setOpen(!open);
+    customOnSelect(value.bezeichnung);
   };
 
   return (
@@ -35,7 +37,7 @@ const Dropdown = ({
             .filter((el) => (
                 selectedOption ? el !== selectedOption : !''))
             .map((entry) => (
-              <li onClick={() => onSelect(entry)}>{entry.bezeichnung || entry}</li>
+              <li key={entry.id} onClick={() => onSelect(entry)}>{entry.bezeichnung || entry}</li>
             ))}
         </ul>
       )}
