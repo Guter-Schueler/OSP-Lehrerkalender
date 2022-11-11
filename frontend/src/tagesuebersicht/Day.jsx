@@ -6,8 +6,6 @@ export default function Day({ dayNum, bemerkungsArray }) {
 
   const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
-  console.log(selectedDate.getDay()-1);
-
   return (
     <div className="day-wrapper">
       <p
