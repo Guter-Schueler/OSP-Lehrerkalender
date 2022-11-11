@@ -48,7 +48,7 @@ export default function BasePage() {
     setFach('')
   }
 
-  function logout() {
+  const logout = () => {
       setShowBasePage(false);
       cookie.remove('token');
       sessionStorage.removeItem('showBasePage');
