@@ -73,6 +73,10 @@ const userStore = create((set, get) => ({
   showBasePage: sessionStorage.getItem('showBasePage'),
   lehrerId: sessionStorage.getItem('lehrerId'),
 
+  setShowBasePage: (showBasePage) => {
+    set({ showBasePage });
+  },
+
   login: async (e) => {
     e.preventDefault();
     customFetch(backendPath + '/login', 'POST', {
@@ -169,7 +173,7 @@ const userStore = create((set, get) => ({
   },
 
   sendWeeklyData: async (weekDay) => {
-    const { getWeeklyData, setWeeklyData } = get();
+    const { getWeeklyData, setWeeklyData, setShowBasePage } = get();
 
     if (document.getElementById(weekDay).value === '') {
       return;
@@ -189,12 +193,13 @@ const userStore = create((set, get) => ({
         });
       })
       .catch((err) => {
+        setShowBasePage(false);
         // replaceAnimatedElement(err.message, true);
       });
   },
 
   addFaecher: async (e) => {
-    const { getCategory, setCategoryArray } = get();
+    const { getCategory, setCategoryArray, setShowBasePage } = get();
     e.preventDefault();
 
     customFetch(backendPath + '/faecher', 'POST', {
@@ -211,12 +216,13 @@ const userStore = create((set, get) => ({
         // document.getElementById('password').value = '';
       })
       .catch((err) => {
+        setShowBasePage(false);
         // replaceAnimatedElement(err.message, true);
       });
   },
 
   addKlassen: async () => {
-    const { setUnitArray, selectedKlasse } = get();
+    const { setUnitArray, selectedKlasse, setShowBasePage } = get();
     if (selectedKlasse.bezeichnung) {
       customFetch(backendPath + '/klassen', 'POST', {
         bezeichnung: selectedKlasse.bezeichnung,
@@ -226,6 +232,7 @@ const userStore = create((set, get) => ({
           setUnitArray(res.rows);
         })
         .catch((err) => {
+          setShowBasePage(false);
           // replaceAnimatedElement(err.message, true);
         });
     }
@@ -236,6 +243,7 @@ const userStore = create((set, get) => ({
   },
 
   submitStudentInfo: async (e) => {
+    const { setShowBasePage } = get();
     e.preventDefault();
     customFetch(backendPath + '/studentInfo', 'POST', {
       newItem: {
@@ -248,6 +256,7 @@ const userStore = create((set, get) => ({
         bemerkung: document.getElementById('comment').value,
       },
     }).catch((err) => {
+      setShowBasePage(false);
       console.error(err);
     });
   },
