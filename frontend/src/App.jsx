@@ -9,9 +9,8 @@ function App() {
 
   return (
     <div id="page-wrapper">
-      {/* {!showBasePage && <Login />} */}
-      <Login />
-      {/* {showBasePage && <BasePage />} */}
+      {!showBasePage && <Login />}
+      {showBasePage && <BasePage />}
     </div>
   );
 }

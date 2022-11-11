@@ -131,7 +131,7 @@ const userStore = create((set, get) => ({
   },
 
   getKalenderBemerkungen: async () => {
-    const res = myfetch(backendPath + '/kalenderBemerkungen');
+    const res = customFetch(backendPath + '/kalenderBemerkungen');
 
     return res;
   },
