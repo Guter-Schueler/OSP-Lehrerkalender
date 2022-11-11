@@ -9,7 +9,6 @@ const Dropdown = ({
       customStyleClass,
       customButtonStyleClass,
       customListWrapClass,
-      customOnSelect
 }) => {
   const [open, setOpen] = React.useState(false);
 
