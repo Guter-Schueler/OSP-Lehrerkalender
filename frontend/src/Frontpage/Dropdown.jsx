@@ -20,7 +20,7 @@ const Dropdown = ({
   const onSelect = (value) => {
     setState(value);
     setOpen(!open);
-    customOnSelect(value.bezeichnung);
+    customOnSelect && customOnSelect(value.bezeichnung);
   };
 
   return (

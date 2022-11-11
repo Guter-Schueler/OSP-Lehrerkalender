@@ -13,11 +13,11 @@ export default function Tagesuebersicht() {
   });
 
   return (
-    <div id="wochen-wrapper">
+    <div key={6} id="wochen-wrapper">
     {
         Array(5)
             .fill(0)
-            .map((_, i) =>
+            .map((i) =>
                 <Day
                     key={i}
                     dayNum={i}
