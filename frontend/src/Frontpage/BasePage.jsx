@@ -22,14 +22,14 @@ export default function BasePage() {
     setKlassenArray,
     faecherArray,
     setFaecherArray,
-    lehrerId,
+    unitArray,
   } = userStore();
 
   console.log(sessionStorage.getItem(''));
 
   React.useEffect(() => {
     getKlassen().then((res) => {
-      addKlassen();
+      addKlassen().then(() => console.log(unitArray))
       const helper = [];
       res.map((el) => helper.push(el));
       setKlassenArray(helper);
@@ -41,11 +41,6 @@ export default function BasePage() {
     });
   }, [selectedFach, selectedKlasse]);
 
-  const onDropdownSelect = (dropDownSelection) => {
-    addKlassen();
-    console.log(lehrerId, dropDownSelection);
-  };
-
   return (
     <div className="base-page-wrapper">
       <div className="header-bar">
@@ -55,7 +50,6 @@ export default function BasePage() {
           title={selectedKlasse.bezeichnung || 'Klasse'}
           setState={setKlasse}
           selectedOption={selectedKlasse.bezeichnung}
-          customOnSelect={onDropdownSelect}
         />
 
         <Dropdown
