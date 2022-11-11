@@ -6,6 +6,7 @@ import StudentTable from '../StudentTable/StudentTable';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import userStore from '../store';
+import cookie from "js-cookie";
 
 export default function BasePage() {
   const {
@@ -22,6 +23,7 @@ export default function BasePage() {
     setKlassenArray,
     setFaecherArray,
     unitArray,
+    setShowBasePage,
   } = userStore();
 
   React.useEffect(() => {
@@ -44,6 +46,12 @@ export default function BasePage() {
 
   const resetFaecherAuswahl = () => {
     setFach('')
+  }
+
+  function logout() {
+      setShowBasePage(false);
+      cookie.remove('token');
+      sessionStorage.removeItem('showBasePage');
   }
 
   return (
@@ -73,6 +81,10 @@ export default function BasePage() {
             className="custom-date-picker-styles"
           />
         </div>
+        <div>
+          <button className="osp-button" onClick={logout}>logout</button>
+        </div>
+
       </div>
 
       <div className="content-page">
