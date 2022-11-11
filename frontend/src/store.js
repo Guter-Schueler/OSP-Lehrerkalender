@@ -73,6 +73,10 @@ const userStore = create((set, get) => ({
   showBasePage: sessionStorage.getItem('showBasePage'),
   lehrerId: sessionStorage.getItem('lehrerId'),
 
+  setShowBasePage: (showBasePage) => {
+    set({ showBasePage });
+  },
+
   login: async (e) => {
     e.preventDefault();
     customFetch(backendPath + '/login', 'POST', {
@@ -97,7 +101,6 @@ const userStore = create((set, get) => ({
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   categoryArray: [],
   unitArray: [],
-  kalenderBemerkungenArray: [],
   weeklyData: [],
   addingCategory: false,
   addingUnit: false,
@@ -118,56 +121,37 @@ const userStore = create((set, get) => ({
     return customFetch(backendPath + '/schueler');
   },
 
-  setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
-    set({ kalenderBemerkungenArray });
-  },
-
-  getKalenderBemerkungen: async () => {
-    const res = customFetch(backendPath + '/kalenderBemerkungen');
-
-    return res;
-  },
-
-  addKalenderBemerkungen: async (e) => {
-    e.preventDefault();
-    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {});
-  },
-
   getFaecher: async () => {
     return customFetch(backendPath + '/faecher');
   },
 
-  getWeeklyData: async () => {
-    return customFetch(backendPath + '/kalenderBemerkungen');
-  },
+  addFaecher: async (e) => {
+    const { getCategory, setCategoryArray, setShowBasePage } = get();
+    e.preventDefault();
 
-  sendWeeklyData: async (weekDay) => {
-    const { getWeeklyData, setWeeklyData } = get();
-
-    if (document.getElementById(weekDay).value === '') {
-      return;
-    }
-    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {
-      bemerkung: document.getElementById(weekDay).value,
-      datum: '2020-01-01',
-      unterrichtId: 1,
+    customFetch(backendPath + '/faecher', 'POST', {
+      // muss noch id vergeben werden
+      //   bezeichnung: document.getElementById('userName').value,
+      //   kuerzel: document.getElementById('password').value,
     })
       .then((res) => {
-        getWeeklyData().then((json) => {
-          let i = 0;
-          let helperArray = [];
-          json.map((el) => helperArray.push(el.bemerkung));
-
-          setWeeklyData(helperArray);
+        getCategory().then((json) => {
+          setCategoryArray(json);
         });
+
+        // document.getElementById('userName').value = '';
+        // document.getElementById('password').value = '';
       })
       .catch((err) => {
+        setShowBasePage(false);
+        cookie.remove('token');
+        sessionStorage.removeItem('showBasePage');
         // replaceAnimatedElement(err.message, true);
       });
   },
-
+  
   addKlassen: async () => {
-    const { setUnitArray, selectedKlasse } = get();
+    const { setUnitArray, selectedKlasse, setShowBasePage } = get();
     if (selectedKlasse.bezeichnung) {
       customFetch(backendPath + '/klassen', 'POST', {
         bezeichnung: selectedKlasse.bezeichnung,
@@ -177,6 +161,9 @@ const userStore = create((set, get) => ({
           setUnitArray(res.rows);
         })
         .catch((err) => {
+          setShowBasePage(false);
+          cookie.remove('token');
+          sessionStorage.removeItem('showBasePage');
           // replaceAnimatedElement(err.message, true);
         });
     }
@@ -187,6 +174,7 @@ const userStore = create((set, get) => ({
   },
 
   submitStudentInfo: async (e) => {
+    const { setShowBasePage } = get();
     e.preventDefault();
     customFetch(backendPath + '/studentInfo', 'POST', {
       newItem: {
@@ -199,6 +187,9 @@ const userStore = create((set, get) => ({
         bemerkung: document.getElementById('comment').value,
       },
     }).catch((err) => {
+      setShowBasePage(false);
+      cookie.remove('token');
+      sessionStorage.removeItem('showBasePage');
       console.error(err);
     });
   },
