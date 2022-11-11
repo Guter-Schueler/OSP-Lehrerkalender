@@ -20,7 +20,6 @@ export default function BasePage() {
     setSelectedDate,
     klassenArray,
     setKlassenArray,
-    faecherArray,
     setFaecherArray,
     unitArray,
   } = userStore();
@@ -39,6 +38,7 @@ export default function BasePage() {
     });
   }, [selectedFach, selectedKlasse]);
 
+  // unitArray ist trotz des namens ein objekt... deswegen muss erst ein array draus erzeugt werden
   const newFaecherArray =
       unitArray.length >= 1 && Array.from(unitArray.values()).map((el) => el);
 
