@@ -75,7 +75,7 @@ const userStore = create((set, get) => ({
 
   login: async (e) => {
     e.preventDefault();
-    myfetch(backendPath + '/login', 'POST', {
+    customFetch(backendPath + '/login', 'POST', {
       userName: document.getElementById('userName').value,
       password: document.getElementById('password').value,
     })
@@ -123,7 +123,7 @@ const userStore = create((set, get) => ({
   },
 
   getSchueler: async () => {
-    return myfetch(backendPath + '/schueler');
+    return customFetch(backendPath + '/schueler');
   },
 
   setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
@@ -138,25 +138,25 @@ const userStore = create((set, get) => ({
 
   addKalenderBemerkungen: async (e) => {
     e.preventDefault();
-    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {});
+    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {});
   },
 
   getArticles: async () => {
-    const res = myfetch(backendPath + '/articles');
+    const res = customFetch(backendPath + '/articles');
 
     return res;
   },
 
   getFaecher: async () => {
-    return myfetch(backendPath + '/faecher');
+    return customFetch(backendPath + '/faecher');
   },
 
   getUnterricht: async () => {
-    return myfetch(backendPath + '/unterricht');
+    return customFetch(backendPath + '/unterricht');
   },
 
   getWeeklyData: async () => {
-    return myfetch(backendPath + '/kalenderBemerkungen');
+    return customFetch(backendPath + '/kalenderBemerkungen');
   },
 
   validateNumber: () => {
@@ -170,7 +170,7 @@ const userStore = create((set, get) => ({
     if (document.getElementById(weekDay).value === '') {
       return;
     }
-    myfetch(backendPath + '/kalenderBemerkungen', 'POST', {
+    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {
       bemerkung: document.getElementById(weekDay).value,
       datum: '2020-01-01',
       unterrichtId: 1,
@@ -193,7 +193,7 @@ const userStore = create((set, get) => ({
     const { getCategory, setCategoryArray } = get();
     e.preventDefault();
 
-    myfetch(backendPath + '/faecher', 'POST', {
+    customFetch(backendPath + '/faecher', 'POST', {
       // muss noch id vergeben werden
       //   bezeichnung: document.getElementById('userName').value,
       //   kuerzel: document.getElementById('password').value,
@@ -214,7 +214,7 @@ const userStore = create((set, get) => ({
   addKlassen: async (e) => {
     const { setUnitArray, selectedKlasse } = get();
     if (selectedKlasse.bezeichnung) {
-      myfetch(backendPath + '/klassen', 'POST', {
+      customFetch(backendPath + '/klassen', 'POST', {
         bezeichnung: selectedKlasse.bezeichnung,
         lehrerId: sessionStorage.getItem('lehrerId'),
       })
@@ -228,13 +228,12 @@ const userStore = create((set, get) => ({
   },
 
   getKlassen: async () => {
-    const { addKlassen } = get();
-    return myfetch(backendPath + '/klassen');
+    return customFetch(backendPath + '/klassen');
   },
 
   submitStudentInfo: async (e) => {
     e.preventDefault();
-    myfetch(backendPath + '/studentInfo', 'POST', {
+    customFetch(backendPath + '/studentInfo', 'POST', {
       newItem: {
         mndNote: document.getElementById('oral-grading').value,
         writtenGrades: {
