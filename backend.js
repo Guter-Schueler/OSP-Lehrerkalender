@@ -142,21 +142,17 @@ app.get('/klassen', checkToken, (req, res) => {
 
 // Wann wird in klassen was geposted und wer darf das ? dementsprechend muss hier angepasst werden
 app.post('/klassen', checkToken, (req, res) => {
-  db.get(
-    'INSERT INTO klassen (klassenlehrerId, bezeichnung) VALUES ($klassenlehrerId, $bezeichnung)',
+  db.all(
+    'SELECT faecher.bezeichnung FROM unterricht LEFT JOIN faecher ON faecherId = faecher.id WHERE lehrerId= $lehrerId AND klassenId = (SELECT id FROM klassen WHERE bezeichnung = $bezeichnung);',
     {
       $bezeichnung: req.body.bezeichnung,
-      $klassenlehrerId: req.body.kuerzel,
+      $lehrerId: req.body.lehrerId,
     },
-    (err) => {
+    (err, rows) => {
       if (err) {
-        if (err.message.includes('UNIQUE constraint failed')) {
-          res.status(400).json({ message: 'An Item cant be added twice' });
-        } else {
-          res.status(500).json({ message: err.message });
-        }
+        res.status(500).json({ message: err.message });
       } else {
-        res.status(200).json({ message: 'inserted' });
+        res.status(200).json({ message: 'inserted', rows });
       }
     }
   );

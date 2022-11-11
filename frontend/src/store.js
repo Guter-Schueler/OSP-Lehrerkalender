@@ -122,7 +122,9 @@ const userStore = create((set, get) => ({
     set({ categoryArray });
   },
 
-  getSchueler: async () => {return myfetch(backendPath + '/schueler')},
+  getSchueler: async () => {
+    return myfetch(backendPath + '/schueler');
+  },
 
   setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
     set({ kalenderBemerkungenArray });
@@ -150,7 +152,7 @@ const userStore = create((set, get) => ({
   },
 
   getUnterricht: async () => {
-    return myfetch(backendPath + '/unterricht')
+    return myfetch(backendPath + '/unterricht');
   },
 
   getWeeklyData: async () => {
@@ -209,30 +211,25 @@ const userStore = create((set, get) => ({
       });
   },
 
-  getKlassen: async () => {
-    return await myfetch(backendPath + '/klassen');
+  addKlassen: async (e) => {
+    const { setUnitArray, selectedKlasse } = get();
+    if (selectedKlasse.bezeichnung) {
+      myfetch(backendPath + '/klassen', 'POST', {
+        bezeichnung: selectedKlasse.bezeichnung,
+        lehrerId: sessionStorage.getItem('lehrerId'),
+      })
+        .then((res) => {
+          setUnitArray(res);
+        })
+        .catch((err) => {
+          // replaceAnimatedElement(err.message, true);
+        });
+    }
   },
 
-  addKlassen: async (e) => {
-    e.preventDefault();
-    const { getKlassen, setUnitArray, replaceAnimatedElement } = get();
-
-    myfetch(backendPath + '/klassen', 'POST', {
-      //   Muss noch geändert werden.
-      //   bezeichnung: document.getElementById('userName').value,
-      //   kuerzel: document.getElementById('password').value,
-    })
-      .then((res) => {
-        getKlassen().then((json) => {
-          setUnitArray(json);
-        });
-
-        document.getElementById('userName').value = '';
-        // replaceAnimatedElement(res.message, false);
-      })
-      .catch((err) => {
-        // replaceAnimatedElement(err.message, true);
-      });
+  getKlassen: async () => {
+    const { addKlassen } = get();
+    return myfetch(backendPath + '/klassen');
   },
 
   submitStudentInfo: async (e) => {

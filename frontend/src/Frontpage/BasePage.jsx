@@ -10,6 +10,7 @@ import userStore from '../store';
 export default function BasePage() {
   const {
     getKlassen,
+    addKlassen,
     getFaecher,
     selectedDate,
     selectedFach,
@@ -24,8 +25,11 @@ export default function BasePage() {
     lehrerId,
   } = userStore();
 
+  console.log(sessionStorage.getItem(''));
+
   React.useEffect(() => {
     getKlassen().then((res) => {
+      addKlassen();
       const helper = [];
       res.map((el) => helper.push(el));
       setKlassenArray(helper);
@@ -38,8 +42,9 @@ export default function BasePage() {
   }, [selectedFach, selectedKlasse]);
 
   const onDropdownSelect = (dropDownSelection) => {
-    console.log(lehrerId, dropDownSelection)
-  }
+    addKlassen();
+    console.log(lehrerId, dropDownSelection);
+  };
 
   return (
     <div className="base-page-wrapper">
