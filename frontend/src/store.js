@@ -114,18 +114,6 @@ const userStore = create((set, get) => ({
     set({ weeklyData });
   },
 
-  setAddingCategory: (addingCategory) => {
-    set({ addingCategory });
-  },
-
-  setAddingUnit: (addingUnit) => {
-    set({ addingUnit });
-  },
-
-  setArticleArray: (articleArray) => {
-    set({ articleArray });
-  },
-
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
   },
@@ -149,27 +137,12 @@ const userStore = create((set, get) => ({
     customFetch(backendPath + '/kalenderBemerkungen', 'POST', {});
   },
 
-  getArticles: async () => {
-    const res = customFetch(backendPath + '/articles');
-
-    return res;
-  },
-
   getFaecher: async () => {
     return customFetch(backendPath + '/faecher');
   },
 
-  getUnterricht: async () => {
-    return customFetch(backendPath + '/unterricht');
-  },
-
   getWeeklyData: async () => {
     return customFetch(backendPath + '/kalenderBemerkungen');
-  },
-
-  validateNumber: () => {
-    let value = parseFloat(document.getElementById('price').value);
-    document.getElementById('price').value = value.toFixed(2);
   },
 
   sendWeeklyData: async (weekDay) => {
@@ -224,7 +197,7 @@ const userStore = create((set, get) => ({
         // replaceAnimatedElement(err.message, true);
       });
   },
-
+  
   addKlassen: async () => {
     const { setUnitArray, selectedKlasse, setShowBasePage } = get();
     if (selectedKlasse.bezeichnung) {

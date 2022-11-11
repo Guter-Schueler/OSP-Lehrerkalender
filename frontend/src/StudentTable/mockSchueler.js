@@ -81,7 +81,7 @@ export const FI007 = {
         {
           id: '3',
           vorname: 'Dogus',
-          nachname: 'Özzi',
+          nachname: 'Sugod',
           mndNote: '6',
           writtenGrades: {
               exam1: '6',
