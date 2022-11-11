@@ -1,8 +1,8 @@
 import React from 'react';
 import userStore from '../store';
 
-export default function Day({ dayNum, bemerkungsArray }) {
-  const { sendWeeklyData, selectedDate } = userStore();
+export default function Day({ dayNum }) {
+  const { selectedDate } = userStore();
 
   const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
@@ -15,7 +15,6 @@ export default function Day({ dayNum, bemerkungsArray }) {
       </p>
       <textarea
         id={weekdays[dayNum]}
-        onBlur={() => sendWeeklyData(weekdays[dayNum])}
         className="day-input"
       />
     </div>

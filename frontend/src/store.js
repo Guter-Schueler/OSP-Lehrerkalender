@@ -101,7 +101,6 @@ const userStore = create((set, get) => ({
   // Lehreransicht ---------------------------------------------------------------------------------------------------------------------
   categoryArray: [],
   unitArray: [],
-  kalenderBemerkungenArray: [],
   weeklyData: [],
   addingCategory: false,
   addingUnit: false,
@@ -122,57 +121,8 @@ const userStore = create((set, get) => ({
     return customFetch(backendPath + '/schueler');
   },
 
-  setKalenderBemerkungenArray: (kalenderBemerkungenArray) => {
-    set({ kalenderBemerkungenArray });
-  },
-
-  getKalenderBemerkungen: async () => {
-    const res = customFetch(backendPath + '/kalenderBemerkungen');
-
-    return res;
-  },
-
-  addKalenderBemerkungen: async (e) => {
-    e.preventDefault();
-    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {
-
-    });
-  },
-
   getFaecher: async () => {
     return customFetch(backendPath + '/faecher');
-  },
-
-  getWeeklyData: async () => {
-    return customFetch(backendPath + '/kalenderBemerkungen');
-  },
-
-  sendWeeklyData: async (weekDay) => {
-    const { getWeeklyData, setWeeklyData, setShowBasePage } = get();
-
-    if (document.getElementById(weekDay).value === '') {
-      return;
-    }
-    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {
-      bemerkung: document.getElementById(weekDay).value,
-      datum: '2020-01-01',
-      unterrichtId: 1,
-    })
-      .then((res) => {
-        getWeeklyData().then((json) => {
-          let i = 0;
-          let helperArray = [];
-          json.map((el) => helperArray.push(el.bemerkung));
-
-          setWeeklyData(helperArray);
-        });
-      })
-      .catch((err) => {
-        setShowBasePage(false);
-        cookie.remove('token');
-        sessionStorage.removeItem('showBasePage');
-        // replaceAnimatedElement(err.message, true);
-      });
   },
 
   addFaecher: async (e) => {
