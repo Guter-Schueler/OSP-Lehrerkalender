@@ -102,6 +102,10 @@ const userStore = create((set, get) => ({
   addingCategory: false,
   addingUnit: false,
 
+  setUnitArray: (unitArray) => {
+    set({ unitArray });
+  },
+
   setWeeklyData: (weeklyData) => {
     set({ weeklyData });
   },
@@ -219,7 +223,7 @@ const userStore = create((set, get) => ({
         lehrerId: sessionStorage.getItem('lehrerId'),
       })
         .then((res) => {
-          setUnitArray(res);
+          setUnitArray(res.rows);
         })
         .catch((err) => {
           // replaceAnimatedElement(err.message, true);

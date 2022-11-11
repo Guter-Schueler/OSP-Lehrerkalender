@@ -27,7 +27,7 @@ export default function BasePage() {
 
   React.useEffect(() => {
     getKlassen().then((res) => {
-      addKlassen().then(() => console.log(unitArray))
+      addKlassen()
       const helper = [];
       res.map((el) => helper.push(el));
       setKlassenArray(helper);
@@ -38,6 +38,11 @@ export default function BasePage() {
       setFaecherArray(helper);
     });
   }, [selectedFach, selectedKlasse]);
+
+  const newFaecherArray = unitArray.length >= 1 && Array.from(unitArray.values());
+
+  const newNewFaecherArray = [];
+  newFaecherArray.length >= 1 && newFaecherArray.map((el) => newNewFaecherArray.push(el));
 
   return (
     <div className="base-page-wrapper">
@@ -52,7 +57,7 @@ export default function BasePage() {
 
         <Dropdown
           key={'faecherDropdown'}
-          data={faecherArray}
+          data={newNewFaecherArray}
           title={selectedFach.bezeichnung || 'Fach'}
           setState={setFach}
           selectedOption={selectedFach.bezeichnung}

@@ -31,7 +31,7 @@ const Dropdown = ({
       </button>
       {open && (
         <ul className={customListWrapClass || "list-wrap"}>
-          {data
+          {data && data
             .filter((el) => (
                 selectedOption ? el !== selectedOption : !''))
             .map((entry) => (

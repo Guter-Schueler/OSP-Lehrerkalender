@@ -3,7 +3,7 @@ export const FI005 = {}
 export const FI006 = {}
 
 export const FI007 = {
-    'Deutsch': [
+    'Mathe': [
         {
           id: '1',
           vorname: 'Oli',
@@ -108,7 +108,7 @@ export const FI007 = {
 export const FI008 = {}
 
 export const FI009 = {
-    'Englisch': [
+    'SuD': [
         {
           id: '5',
           vorname: 'Bob',
