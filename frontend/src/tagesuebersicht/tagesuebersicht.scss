@@ -25,7 +25,6 @@
   border-right: 1px solid black;
   border-bottom: 1px solid black;
   border-bottom-right-radius: 5px;
-  box-shadow: 2px 0 2px 0 grey;
 }
 
 .day-input {
@@ -36,4 +35,9 @@
   outline: none;
   resize: none;
   padding: 0 0.5rem;
+}
+
+.highlight-day {
+  box-sizing: border-box;
+  box-shadow: inset 0 0 2px 1px gold;
 }
