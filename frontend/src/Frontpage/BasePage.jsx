@@ -25,8 +25,6 @@ export default function BasePage() {
     unitArray,
   } = userStore();
 
-  console.log(sessionStorage.getItem(''));
-
   React.useEffect(() => {
     getKlassen().then((res) => {
       addKlassen().then(() => console.log(unitArray))

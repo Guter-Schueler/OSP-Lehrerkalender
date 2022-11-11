@@ -211,7 +211,7 @@ const userStore = create((set, get) => ({
       });
   },
 
-  addKlassen: async (e) => {
+  addKlassen: async () => {
     const { setUnitArray, selectedKlasse } = get();
     if (selectedKlasse.bezeichnung) {
       customFetch(backendPath + '/klassen', 'POST', {
