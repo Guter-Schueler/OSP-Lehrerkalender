@@ -20,14 +20,13 @@ export default function BasePage() {
     setSelectedDate,
     klassenArray,
     setKlassenArray,
-    faecherArray,
     setFaecherArray,
     unitArray,
   } = userStore();
 
   React.useEffect(() => {
     getKlassen().then((res) => {
-      addKlassen().then(() => console.log(unitArray))
+      addKlassen()
       const helper = [];
       res.map((el) => helper.push(el));
       setKlassenArray(helper);
@@ -39,6 +38,14 @@ export default function BasePage() {
     });
   }, [selectedFach, selectedKlasse]);
 
+  // unitArray ist trotz des namens ein objekt... deswegen muss erst ein array draus erzeugt werden
+  const newFaecherArray =
+      unitArray.length >= 1 && Array.from(unitArray.values()).map((el) => el);
+
+  const resetFaecherAuswahl = () => {
+    setFach('')
+  }
+
   return (
     <div className="base-page-wrapper">
       <div className="header-bar">
@@ -48,11 +55,12 @@ export default function BasePage() {
           title={selectedKlasse.bezeichnung || 'Klasse'}
           setState={setKlasse}
           selectedOption={selectedKlasse.bezeichnung}
+          customOnSelect={resetFaecherAuswahl}
         />
 
         <Dropdown
           key={'faecherDropdown'}
-          data={faecherArray}
+          data={newFaecherArray}
           title={selectedFach.bezeichnung || 'Fach'}
           setState={setFach}
           selectedOption={selectedFach.bezeichnung}
