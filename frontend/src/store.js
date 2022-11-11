@@ -130,7 +130,9 @@ const userStore = create((set, get) => ({
 
   addKalenderBemerkungen: async (e) => {
     e.preventDefault();
-    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {});
+    customFetch(backendPath + '/kalenderBemerkungen', 'POST', {
+
+    });
   },
 
   getFaecher: async () => {

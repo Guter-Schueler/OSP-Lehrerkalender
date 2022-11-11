@@ -21,7 +21,7 @@ export default function Tagesuebersicht() {
                 <Day
                     key={i}
                     dayNum={i}
-                    bemerkungen={bemerkungsArray}
+                    bemerkungen={['']}
                 />
             )
     }
