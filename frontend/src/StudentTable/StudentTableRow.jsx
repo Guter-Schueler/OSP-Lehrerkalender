@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.scss';
 import InputModal from "./InputModal/InputModal";
 
-const StudentTableRow = ({ student, klasse, fach }) => {
+const StudentTableRow = ({ student }) => {
   const [modalToggle, setModalToggle] = React.useState(false);
 
   const convertGradeToNumber = (grade) => {
@@ -53,8 +53,6 @@ const StudentTableRow = ({ student, klasse, fach }) => {
             modalToggle={modalToggle}
             handleModalToggle={handleModalToggle}
             student={student}
-            klasse={klasse}
-            fach={fach}
         />
     </>
   );
