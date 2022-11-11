@@ -110,18 +110,6 @@ const userStore = create((set, get) => ({
     set({ weeklyData });
   },
 
-  setAddingCategory: (addingCategory) => {
-    set({ addingCategory });
-  },
-
-  setAddingUnit: (addingUnit) => {
-    set({ addingUnit });
-  },
-
-  setArticleArray: (articleArray) => {
-    set({ articleArray });
-  },
-
   setCategoryArray: (categoryArray) => {
     set({ categoryArray });
   },
@@ -145,27 +133,12 @@ const userStore = create((set, get) => ({
     customFetch(backendPath + '/kalenderBemerkungen', 'POST', {});
   },
 
-  getArticles: async () => {
-    const res = customFetch(backendPath + '/articles');
-
-    return res;
-  },
-
   getFaecher: async () => {
     return customFetch(backendPath + '/faecher');
   },
 
-  getUnterricht: async () => {
-    return customFetch(backendPath + '/unterricht');
-  },
-
   getWeeklyData: async () => {
     return customFetch(backendPath + '/kalenderBemerkungen');
-  },
-
-  validateNumber: () => {
-    let value = parseFloat(document.getElementById('price').value);
-    document.getElementById('price').value = value.toFixed(2);
   },
 
   sendWeeklyData: async (weekDay) => {
@@ -187,28 +160,6 @@ const userStore = create((set, get) => ({
 
           setWeeklyData(helperArray);
         });
-      })
-      .catch((err) => {
-        // replaceAnimatedElement(err.message, true);
-      });
-  },
-
-  addFaecher: async (e) => {
-    const { getCategory, setCategoryArray } = get();
-    e.preventDefault();
-
-    customFetch(backendPath + '/faecher', 'POST', {
-      // muss noch id vergeben werden
-      //   bezeichnung: document.getElementById('userName').value,
-      //   kuerzel: document.getElementById('password').value,
-    })
-      .then((res) => {
-        getCategory().then((json) => {
-          setCategoryArray(json);
-        });
-
-        // document.getElementById('userName').value = '';
-        // document.getElementById('password').value = '';
       })
       .catch((err) => {
         // replaceAnimatedElement(err.message, true);
