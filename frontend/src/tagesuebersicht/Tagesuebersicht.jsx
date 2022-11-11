@@ -7,6 +7,7 @@ export default function Tagesuebersicht() {
   const { getKalenderBemerkungen } = userStore();
 
   const bemerkungsArray = [];
+  const weekdays = [0, 1, 2, 3, 4];
 
   getKalenderBemerkungen().then((response) => {
       bemerkungsArray.push(response)
@@ -15,8 +16,7 @@ export default function Tagesuebersicht() {
   return (
     <div key={6} id="wochen-wrapper">
     {
-        Array(5)
-            .fill(0)
+        weekdays
             .map((i) =>
                 <Day
                     key={i}

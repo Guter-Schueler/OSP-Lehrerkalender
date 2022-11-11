@@ -4,29 +4,20 @@ import userStore from '../store';
 export default function Day({ dayNum, bemerkungsArray }) {
   const { sendWeeklyData, selectedDate } = userStore();
 
-  const whatWeekday = React.useMemo(() => {
-      switch(dayNum) {
-          case 0:
-              return 'Montag'
-          case 1:
-              return 'Dienstag'
-          case 2:
-              return 'Mittwoch'
-          case 3:
-              return 'Donnerstag'
-          case 4:
-              return 'Freitag'
-          default: return 'weekend'
-      }
-  })
+  const weekdays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
+  console.log(selectedDate.getDay()-1);
 
   return (
     <div className="day-wrapper">
-      <p className="day">{ whatWeekday }</p>
+      <p
+          className={`day ${selectedDate.getDay()-1 === dayNum && 'highlight-day'}`}
+      >
+          { weekdays[dayNum] }
+      </p>
       <textarea
-        id={whatWeekday}
-        onBlur={() => sendWeeklyData(whatWeekday)}
+        id={weekdays[dayNum]}
+        onBlur={() => sendWeeklyData(weekdays[dayNum])}
         className="day-input"
       />
     </div>
