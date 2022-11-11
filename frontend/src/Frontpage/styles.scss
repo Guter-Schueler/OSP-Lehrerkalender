@@ -5,10 +5,11 @@
 .header-bar {
   display: flex;
   width: 100%;
-  height: 8%;
+  height: 50px;
   box-sizing: border-box;
   border-bottom: 1px solid black;
-  padding: 8px 0;
+  align-items: center;
+  padding: 8px 16px;
 }
 
 .dropdown {
@@ -16,7 +17,6 @@
 }
 
 .datepicker-position {
-  margin-right: 16px;
   margin-left: auto;
   display: flex;
   align-items: center;
@@ -91,7 +91,7 @@
 
 .content-page {
   display: flex;
-  height: 92%;
+  height: calc(100% - 50px);
   width: 100vw;
 }
 
